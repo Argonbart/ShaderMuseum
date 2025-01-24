@@ -1,0 +1,291 @@
+[gd_scene load_steps=22 format=3 uid="uid://ck3xpgbo76yyf"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_3tcgm"]
+[ext_resource type="Texture2D" uid="uid://bwunbth5lds86" path="res://icon.svg" id="1_o8kcy"]
+[ext_resource type="Script" path="res://camera.gd" id="3_keecu"]
+[ext_resource type="Shader" path="res://shader_1.gdshader" id="4_d8wi2"]
+[ext_resource type="Shader" path="res://shader_2.gdshader" id="5_273fk"]
+[ext_resource type="Texture2D" uid="uid://ckoot8qmpkpk3" path="res://pillar.png" id="5_ipm4k"]
+[ext_resource type="Shader" path="res://shader_4.gdshader" id="7_r5irg"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_akmh2"]
+size = Vector2(2000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b1wry"]
+size = Vector2(2000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x5e2d"]
+size = Vector2(64, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_645lh"]
+shader = ExtResource("4_d8wi2")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.871, 0.267, 0.231, 1)
+shader_parameter/colour_2 = Color(0, 0.42, 0.706, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.0
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 740.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdq0m"]
+shader = ExtResource("5_273fk")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 0.439
+shader_parameter/cutoff = 0.252
+shader_parameter/falloff = 0.2
+shader_parameter/edge_fade = 0.15
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Vector4(1, 0.9, 0.65, 0.8)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[sub_resource type="Shader" id="Shader_xxisj"]
+code = "shader_type canvas_item;
+
+group_uniforms Sine;
+uniform bool do_abs;
+uniform bool do_quantize;
+uniform float quantize_to : hint_range(0, 2, 0.1) = 1;
+uniform vec2 sine_amplitude = vec2(1.0, 0.0);
+uniform vec2 sine_speed = vec2(1.0, 0.0);
+
+void vertex() {
+	vec2 s = sin(TIME * sine_speed);
+	if (do_abs) {
+		s = abs(s);
+	}
+	VERTEX += s * sine_amplitude;
+	if (do_quantize) {
+		VERTEX = round(VERTEX / quantize_to);
+		VERTEX *= quantize_to;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_icy82"]
+shader = SubResource("Shader_xxisj")
+shader_parameter/do_abs = false
+shader_parameter/do_quantize = false
+shader_parameter/quantize_to = 0.7
+shader_parameter/sine_amplitude = Vector2(0, 60)
+shader_parameter/sine_speed = Vector2(0, 3)
+
+[sub_resource type="Shader" id="Shader_mfoir"]
+code = "shader_type canvas_item;
+
+group_uniforms Sine;
+uniform bool do_abs;
+uniform bool do_quantize;
+uniform float quantize_to : hint_range(0, 2, 0.1) = 1;
+uniform vec2 sine_amplitude = vec2(1.0, 0.0);
+uniform vec2 sine_speed = vec2(1.0, 0.0);
+
+void vertex() {
+	vec2 s = sin(TIME * sine_speed);
+	if (do_abs) {
+		s = abs(s);
+	}
+	VERTEX += s * sine_amplitude;
+	if (do_quantize) {
+		VERTEX = round(VERTEX / quantize_to);
+		VERTEX *= quantize_to;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xqv4u"]
+shader = SubResource("Shader_mfoir")
+shader_parameter/do_abs = false
+shader_parameter/do_quantize = false
+shader_parameter/quantize_to = 0.7
+shader_parameter/sine_amplitude = Vector2(0, 120)
+shader_parameter/sine_speed = Vector2(0, 4)
+
+[sub_resource type="Shader" id="Shader_2efs4"]
+code = "shader_type canvas_item;
+
+group_uniforms Sine;
+uniform bool do_abs;
+uniform bool do_quantize;
+uniform float quantize_to : hint_range(0, 2, 0.1) = 1;
+uniform vec2 sine_amplitude = vec2(1.0, 0.0);
+uniform vec2 sine_speed = vec2(1.0, 0.0);
+
+void vertex() {
+	vec2 s = sin(TIME * sine_speed);
+	if (do_abs) {
+		s = abs(s);
+	}
+	VERTEX += s * sine_amplitude;
+	if (do_quantize) {
+		VERTEX = round(VERTEX / quantize_to);
+		VERTEX *= quantize_to;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kw57g"]
+shader = SubResource("Shader_2efs4")
+shader_parameter/do_abs = false
+shader_parameter/do_quantize = false
+shader_parameter/quantize_to = 0.7
+shader_parameter/sine_amplitude = Vector2(0, 100)
+shader_parameter/sine_speed = Vector2(0, 2)
+
+[sub_resource type="Shader" id="Shader_if2nf"]
+code = "shader_type canvas_item;
+
+group_uniforms Sine;
+uniform bool do_abs;
+uniform bool do_quantize;
+uniform float quantize_to : hint_range(0, 2, 0.1) = 1;
+uniform vec2 sine_amplitude = vec2(1.0, 0.0);
+uniform vec2 sine_speed = vec2(1.0, 0.0);
+
+void vertex() {
+	vec2 s = sin(TIME * sine_speed);
+	if (do_abs) {
+		s = abs(s);
+	}
+	VERTEX += s * sine_amplitude;
+	if (do_quantize) {
+		VERTEX = round(VERTEX / quantize_to);
+		VERTEX *= quantize_to;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5ne7"]
+shader = SubResource("Shader_if2nf")
+shader_parameter/do_abs = false
+shader_parameter/do_quantize = false
+shader_parameter/quantize_to = 0.7
+shader_parameter/sine_amplitude = Vector2(0, 40)
+shader_parameter/sine_speed = Vector2(0, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkbtp"]
+shader = ExtResource("7_r5irg")
+shader_parameter/influence = 0.2
+shader_parameter/do_abs = false
+shader_parameter/do_quantize = false
+shader_parameter/quantize_to = 0.7
+shader_parameter/sine_amplitude = Vector2(200, 400)
+shader_parameter/sine_speed = Vector2(1, 1)
+
+[node name="ShaderMuseum" type="Node2D"]
+
+[node name="Ground" type="StaticBody2D" parent="."]
+scale = Vector2(10, 1)
+
+[node name="GroundMesh" type="MeshInstance2D" parent="Ground"]
+modulate = Color(0.16, 0.16, 0.16, 1)
+position = Vector2(653, 657)
+mesh = SubResource("QuadMesh_akmh2")
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Ground"]
+position = Vector2(653, 657)
+shape = SubResource("RectangleShape2D_b1wry")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(583, 558)
+script = ExtResource("1_3tcgm")
+
+[node name="PlayerSprite" type="Sprite2D" parent="Player"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_o8kcy")
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_x5e2d")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(576, 324)
+script = ExtResource("3_keecu")
+player = NodePath("../Player")
+
+[node name="WhiteMarker1" type="ColorRect" parent="."]
+offset_left = -214.0
+offset_top = 314.0
+offset_right = -174.0
+offset_bottom = 354.0
+
+[node name="WhiteMarker2" type="ColorRect" parent="."]
+offset_left = 1332.0
+offset_top = 312.0
+offset_right = 1372.0
+offset_bottom = 352.0
+
+[node name="Shader1" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_645lh")
+offset_left = 181.0
+offset_top = 96.0
+offset_right = 981.0
+offset_bottom = 496.0
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+position = Vector2(2134, 478)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_o8kcy")
+
+[node name="WhiteMarker3" type="TextureRect" parent="."]
+offset_left = 2133.0
+offset_top = 553.0
+offset_right = 2152.0
+offset_bottom = 652.0
+scale = Vector2(0.165, 0.165)
+texture = ExtResource("5_ipm4k")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="Shader2" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_gdq0m")
+offset_left = 1548.0
+offset_top = -93.0
+offset_right = 2579.0
+offset_bottom = 606.0
+
+[node name="PlayerSprite2" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_icy82")
+position = Vector2(3045, 248)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_o8kcy")
+
+[node name="PlayerSprite3" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_xqv4u")
+position = Vector2(2602, 124)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_o8kcy")
+
+[node name="PlayerSprite4" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_kw57g")
+position = Vector2(2804, 191)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_o8kcy")
+
+[node name="PlayerSprite5" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_g5ne7")
+position = Vector2(2652, 310)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_o8kcy")
+
+[node name="PlayerSprite6" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_g5ne7")
+position = Vector2(3000, 78)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_o8kcy")
+
+[node name="PlayerSprite7" type="Sprite2D" parent="."]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_nkbtp")
+position = Vector2(3448, 239)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_o8kcy")
