@@ -14,7 +14,7 @@ config/name="ShaderMuseum"
 run/main_scene="res://presentation/presentation.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0.252028, 0.252028, 0.252028, 1)
-config/icon="res://icon.svg"
+config/icon="res://presentation/sprites/icon.svg"
 
 [display]
 

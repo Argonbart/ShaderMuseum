@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckoot8qmpkpk3"
-path="res://.godot/imported/pillar.png-943ec9bb4a2ceb58db2b43f8d954f059.ctex"
+uid="uid://dsulqpbnp7mop"
+path="res://.godot/imported/seamless-wavy-line-pattern-png.webp-3dece67e62f846ded16c5d61eebc2b35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pillar.png"
-dest_files=["res://.godot/imported/pillar.png-943ec9bb4a2ceb58db2b43f8d954f059.ctex"]
+source_file="res://presentation/sprites/seamless-wavy-line-pattern-png.webp"
+dest_files=["res://.godot/imported/seamless-wavy-line-pattern-png.webp-3dece67e62f846ded16c5d61eebc2b35.ctex"]
 
 [params]
 

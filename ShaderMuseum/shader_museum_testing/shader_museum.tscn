@@ -1,12 +1,12 @@
 [gd_scene load_steps=22 format=3 uid="uid://ck3xpgbo76yyf"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_3tcgm"]
-[ext_resource type="Texture2D" uid="uid://bwunbth5lds86" path="res://icon.svg" id="1_o8kcy"]
-[ext_resource type="Script" path="res://camera.gd" id="3_keecu"]
-[ext_resource type="Shader" path="res://shader_1.gdshader" id="4_d8wi2"]
-[ext_resource type="Shader" path="res://shader_2.gdshader" id="5_273fk"]
-[ext_resource type="Texture2D" uid="uid://ckoot8qmpkpk3" path="res://pillar.png" id="5_ipm4k"]
-[ext_resource type="Shader" path="res://shader_4.gdshader" id="7_r5irg"]
+[ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_3tcgm"]
+[ext_resource type="Texture2D" uid="uid://bwunbth5lds86" path="res://presentation/sprites/icon.svg" id="1_o8kcy"]
+[ext_resource type="Script" path="res://presentation/scripts/camera.gd" id="3_keecu"]
+[ext_resource type="Shader" path="res://shader_museum_testing/shader_1.gdshader" id="4_d8wi2"]
+[ext_resource type="Shader" path="res://shader_museum_testing/shader_2.gdshader" id="5_273fk"]
+[ext_resource type="Texture2D" uid="uid://ckoot8qmpkpk3" path="res://presentation/sprites/pillar.png" id="5_ipm4k"]
+[ext_resource type="Shader" path="res://shader_museum_testing/shader_4.gdshader" id="7_r5irg"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_akmh2"]
 size = Vector2(2000, 100)
@@ -47,7 +47,7 @@ shader_parameter/color = Vector4(1, 0.9, 0.65, 0.8)
 shader_parameter/hdr = false
 shader_parameter/seed = 5.0
 
-[sub_resource type="Shader" id="Shader_xxisj"]
+[sub_resource type="Shader" id="Shader_keycd"]
 code = "shader_type canvas_item;
 
 group_uniforms Sine;
@@ -70,14 +70,14 @@ void vertex() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_icy82"]
-shader = SubResource("Shader_xxisj")
+shader = SubResource("Shader_keycd")
 shader_parameter/do_abs = false
 shader_parameter/do_quantize = false
 shader_parameter/quantize_to = 0.7
 shader_parameter/sine_amplitude = Vector2(0, 60)
 shader_parameter/sine_speed = Vector2(0, 3)
 
-[sub_resource type="Shader" id="Shader_mfoir"]
+[sub_resource type="Shader" id="Shader_kum4k"]
 code = "shader_type canvas_item;
 
 group_uniforms Sine;
@@ -100,14 +100,14 @@ void vertex() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqv4u"]
-shader = SubResource("Shader_mfoir")
+shader = SubResource("Shader_kum4k")
 shader_parameter/do_abs = false
 shader_parameter/do_quantize = false
 shader_parameter/quantize_to = 0.7
 shader_parameter/sine_amplitude = Vector2(0, 120)
 shader_parameter/sine_speed = Vector2(0, 4)
 
-[sub_resource type="Shader" id="Shader_2efs4"]
+[sub_resource type="Shader" id="Shader_uovjd"]
 code = "shader_type canvas_item;
 
 group_uniforms Sine;
@@ -130,14 +130,14 @@ void vertex() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kw57g"]
-shader = SubResource("Shader_2efs4")
+shader = SubResource("Shader_uovjd")
 shader_parameter/do_abs = false
 shader_parameter/do_quantize = false
 shader_parameter/quantize_to = 0.7
 shader_parameter/sine_amplitude = Vector2(0, 100)
 shader_parameter/sine_speed = Vector2(0, 2)
 
-[sub_resource type="Shader" id="Shader_if2nf"]
+[sub_resource type="Shader" id="Shader_0dpyw"]
 code = "shader_type canvas_item;
 
 group_uniforms Sine;
@@ -160,7 +160,7 @@ void vertex() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g5ne7"]
-shader = SubResource("Shader_if2nf")
+shader = SubResource("Shader_0dpyw")
 shader_parameter/do_abs = false
 shader_parameter/do_quantize = false
 shader_parameter/quantize_to = 0.7
