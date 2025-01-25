@@ -191,7 +191,7 @@ position = Vector2(653, 657)
 shape = SubResource("RectangleShape2D_b1wry")
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(583, 558)
+position = Vector2(584, 575)
 script = ExtResource("1_3tcgm")
 
 [node name="PlayerSprite" type="Sprite2D" parent="Player"]
@@ -203,6 +203,7 @@ shape = SubResource("RectangleShape2D_x5e2d")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(576, 324)
+zoom = Vector2(1.5, 1.5)
 script = ExtResource("3_keecu")
 player = NodePath("../Player")
 

@@ -1,25 +1,55 @@
 extends CharacterBody2D
 
+@export var presenter: Node
 
 const SPEED = 1000.0
 const JUMP_VELOCITY = -400.0
 
+var frame_swapping_speed: float = 4.0
+var target_position_x: float = 0.0
+var is_moving = false
+var is_moving_left = false
+var is_moving_right = false
 
-func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
+func _process(delta):
+	
+	# adjust movement
+	if is_moving_left:
+		position.x = floor(lerp(position.x, target_position_x, delta * frame_swapping_speed))
+	if is_moving_right:
+		position.x = ceil(lerp(position.x, target_position_x, delta * frame_swapping_speed))
+	if position.x == target_position_x:
+		is_moving = false
+		is_moving_left = false
+		is_moving_right = false
+	
+	# manuell movement
+	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		position.x += direction * SPEED * delta
+	
+	# frame movement
+	if !is_moving:
+		if Input.is_action_just_pressed("left_frame"):
+			is_moving = true
+			if presenter.current_step == 0:
+				is_moving_right = true
+			else:
+				is_moving_left = true
+			presenter.previous()
+		if Input.is_action_just_pressed("right_frame"):
+			is_moving = true
+			if presenter.current_step == presenter.steps_to_frame_dict.size() - 1:
+				is_moving_left = true
+			else:
+				is_moving_right = true
+			presenter.next()
 
-	move_and_slide()
+func move_frame_to_the_left():
+	target_position_x = position.x - 2000.0
+
+func move_frame_to_the_right():
+	target_position_x = position.x + 2000.0
+
+func move_to_frame(index):
+	target_position_x = index * 2000.0

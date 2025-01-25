@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dlpyf1awwppwg"]
+
+[ext_resource type="Shader" path="res://presentation/label1/label1_shader.gdshader" id="1_5dbbv"]
+[ext_resource type="Texture2D" uid="uid://dsulqpbnp7mop" path="res://seamless-wavy-line-pattern-png.webp" id="2_utg4s"]
+
+[resource]
+shader = ExtResource("1_5dbbv")
+shader_parameter/fill_tex_offset = Vector2(0, 0)
+shader_parameter/fill_tex_scale = Vector2(3, 10)
+shader_parameter/base_color = Color(0.81, 0, 0.0134998, 1)
+shader_parameter/fill_brighten_color = Color(0, 0, 0, 1)
+shader_parameter/cutoff = 0.5
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_thickness = 5.925
+shader_parameter/fill_tex = ExtResource("2_utg4s")
