@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=62 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
@@ -25,6 +25,14 @@
 [ext_resource type="Shader" path="res://presentation/frame4/godot_schwarm_13.gdshader" id="22_37cre"]
 [ext_resource type="Shader" path="res://presentation/frame4/godot_schwarm_11.gdshader" id="23_pqyuj"]
 [ext_resource type="Shader" path="res://presentation/frame4/godot_schwarm_14.gdshader" id="25_7mc2f"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_1.gdshader" id="26_12yva"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_2.gdshader" id="27_q3tgs"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_3.gdshader" id="28_ce7qe"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_4.gdshader" id="29_5tac0"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_5.gdshader" id="30_b0qrc"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_6.gdshader" id="31_n4urg"]
+[ext_resource type="Shader" path="res://presentation/frame5/effect_7.gdshader" id="32_bjjaq"]
+[ext_resource type="Texture2D" uid="uid://jh6jn035prxj" path="res://presentation/sprites/white_square.png" id="33_ygtn6"]
 
 [sub_resource type="Environment" id="Environment_1bayy"]
 background_mode = 3
@@ -227,12 +235,67 @@ shader_parameter/amplitude_x = 25.0
 shader_parameter/inclination = 50.0
 shader_parameter/rotation_angle = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ver5r"]
+shader = ExtResource("28_ce7qe")
+shader_parameter/speed = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wwt0u"]
+shader = ExtResource("29_5tac0")
+shader_parameter/DonutMaskCenter = Vector2(0.5, 0.5)
+shader_parameter/OutlineWidth = 1.0
+shader_parameter/OutlinePixelSize = 0.01
+shader_parameter/UseRainbowColorOutline = true
+shader_parameter/RainbowColorLightOffset = 0.022
+shader_parameter/RainbowColorSinFrequency = 0.5
+shader_parameter/OutlineUseNoise = false
+shader_parameter/NoiseBlockSize = 5.0
+shader_parameter/NoiseMaxLineWidth = 10.0
+shader_parameter/NoiseMinLineWidth = 5.0
+shader_parameter/NoiseFreq = 1.0
+shader_parameter/BackgroundColor = Color(1, 0, 0.72549, 0.52549)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rmd3c"]
+shader = ExtResource("27_q3tgs")
+shader_parameter/dis = 0.5
+shader_parameter/width = 0.1
+shader_parameter/blur = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxy47"]
+shader = ExtResource("26_12yva")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.871, 0.267, 0.231, 1)
+shader_parameter/colour_2 = Color(0, 0.42, 0.706, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 740.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ijny"]
+shader = ExtResource("32_bjjaq")
+shader_parameter/Smooth = true
+shader_parameter/width = 32.0
+shader_parameter/pixel_size = 2
+shader_parameter/width_speed = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2dbx"]
+shader = ExtResource("31_n4urg")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vgnoc"]
+shader = ExtResource("30_b0qrc")
+shader_parameter/strength = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/angle = 34.0
+
 [node name="Presentation" type="Node2D"]
 
 [node name="Presenter" type="Node" parent="." node_paths=PackedStringArray("player", "frame")]
 script = ExtResource("1_lm8r0")
 player = NodePath("../Player")
-frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5")]
+frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1bayy")
@@ -400,7 +463,6 @@ scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
 text = "- Was sind Shader?
-- Anwendungen für 2D Shader
 - Sprite Animationen
 - Schatten"
 
@@ -671,3 +733,85 @@ texture = ExtResource("2_rtug0")
 
 [node name="Frame5" type="Node2D" parent="."]
 position = Vector2(10000, 0)
+
+[node name="FrameTitle" type="Label" parent="Frame5"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_right = 61050.0
+offset_bottom = 32781.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.01, 0.01)
+theme_override_fonts/font = ExtResource("7_yb5up")
+theme_override_font_sizes/font_size = 3000
+text = "Visuelle Effekte"
+
+[node name="Text" type="Label" parent="Frame5"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 100.0
+offset_right = 79760.0
+offset_bottom = 60133.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.008, 0.008)
+theme_override_fonts/font = ExtResource("8_pgxwn")
+theme_override_font_sizes/font_size = 4000
+text = "- Endlose Möglichkeiten
+- Künstlerische Freiheit
+- Oft komplizierte Mathematik"
+
+[node name="Effekt0" type="ColorRect" parent="Frame5"]
+material = SubResource("ShaderMaterial_ver5r")
+offset_left = -100.0
+offset_right = 600.0
+offset_bottom = 500.0
+
+[node name="Effekt1" type="ColorRect" parent="Frame5"]
+material = SubResource("ShaderMaterial_wwt0u")
+offset_left = -100.0
+offset_right = 600.0
+offset_bottom = 500.0
+
+[node name="Effekt2" type="ColorRect" parent="Frame5"]
+material = SubResource("ShaderMaterial_rmd3c")
+offset_left = -100.0
+offset_right = 600.0
+offset_bottom = 500.0
+
+[node name="Effekt3" type="ColorRect" parent="Frame5"]
+material = SubResource("ShaderMaterial_lxy47")
+offset_left = -100.0
+offset_right = 600.0
+offset_bottom = 500.0
+
+[node name="Godot1" type="Sprite2D" parent="Frame5"]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_2ijny")
+position = Vector2(-550, 350)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("33_ygtn6")
+
+[node name="Godot2" type="Sprite2D" parent="Frame5"]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_j2dbx")
+position = Vector2(-400, 350)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_rtug0")
+
+[node name="Godot3" type="Sprite2D" parent="Frame5"]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_vgnoc")
+position = Vector2(-250, 350)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_rtug0")
+
+[node name="Frame6" type="Node2D" parent="."]
