@@ -4,9 +4,11 @@
 code = "// Shader type: CanvasItem
 shader_type canvas_item;
 
-// Uniforms for mouse input
+// Uniforms for mouse input and animation control
 uniform vec2 iMouse;
 uniform vec2 color_rect_size;
+uniform float reveal_time = 1.0; // Animation progress [0.0 to 1.0]
+uniform bool active_mouse;
 
 // Function to calculate the signed distance to a circle
 float sdCircle(vec2 p, float r) {
@@ -14,25 +16,114 @@ float sdCircle(vec2 p, float r) {
 }
 
 void fragment() {
+	
+	vec2 offset = vec2(-0.6, 0.0);
+	float circle_radius = 0.2;
+	
     // Use UV coordinates to make the shader relative to the node
     vec2 uv = UV;
-    vec2 p = uv * 2.0 - 1.0; // Transform UV to range [-1, 1]
+    vec2 p = uv * 2.0 - 1.0 + offset; // Transform UV to range [-1, 1]
 
     // Adjust mouse position to align with the ColorRect's center
-    vec2 m = (iMouse / color_rect_size) * 2.0 - 1.0; // Normalize mouse position to screen UV space and transform to [-1, 1]
+    vec2 m = (iMouse / color_rect_size) * 2.0 - 1.0 + offset; // Normalize mouse position to screen UV space and transform to [-1, 1]
 
-    float d = sdCircle(p, 0.3);
+    // Calculate the angle of the current point in polar coordinates
+    float angle = atan(p.y, p.x) + PI / 2.0; // atan2 in radians
+    if (angle < 0.0) angle += 2.0 * 3.14159265359; // Map angle to [0, 2*PI]
+
+    // The maximum angle to reveal based on animation progress
+    float max_angle = 2.0 * 3.14159265359 * reveal_time;
+
+    // Determine whether the current pixel is within the revealed portion
+    float d = sdCircle(p, circle_radius);
+    bool within_revealed_section = (angle <= max_angle);
 
     // Coloring logic
-	vec3 col = vec3(0.0, 0.0, 0.0);
-    //vec3 col = (d > 0.0) ? vec3(0.9, 0.6, 0.3) : vec3(0.65, 0.85, 1.0);
-    col *= 1.0 - exp(-6.0 * abs(d));
-    col *= 0.8 + 0.2 * cos(150.0 * d);
-    col = mix(col, vec3(1.0), 1.0 - smoothstep(0.0, 0.01, abs(d)));
+    vec3 col = vec3(0.0);
+    if (within_revealed_section) {
+        col = mix(col, vec3(1.0), 1.0 - smoothstep(0.0, 0.01, abs(d)));
+    }
 
-    float d_mouse = sdCircle(m, 0.3);
-    col = mix(col, vec3(1.0, 1.0, 0.0), 1.0 - smoothstep(0.0, 0.005, abs(length(p - m) - abs(d_mouse)) - 0.0025));
-    col = mix(col, vec3(1.0, 1.0, 0.0), 1.0 - smoothstep(0.0, 0.005, length(p - m) - 0.015));
+    // Highlight mouse position
+	if (active_mouse) {
+	    float d_mouse = sdCircle(m, circle_radius);
+	    col = mix(col, vec3(1.0, 0.0, 0.0), 1.0 - smoothstep(0.0, 0.005, abs(length(p - m) - abs(d_mouse)) - 0.0025));
+	    col = mix(col, vec3(1.0, 0.0, 0.0), 1.0 - smoothstep(0.0, 0.005, length(p - m) - 0.015));
+	
+		// Highlight mouse position with a line
+		//vec2 mouse_to_circle_middle = p - m;
+		//vec2 mouse_to_circle_middle_norm = normalize(mouse_to_circle_middle);
+		//vec2 closest_point = mouse_to_circle_middle_norm * mouse_to_circle_middle_norm;
+		
+	    //vec2 dir = normalize(m); // Direction from the center to the mouse
+	    //float t_along_line = dot(p, dir); // Project point p onto the line from center to mouse
+	    //vec2 closest_point = t_along_line * dir; // Closest point on the line from center to mouse
+//
+	    //float dist_to_line = length(p - closest_point); // Distance to the line
+	    //float intersection_t = circle_radius / length(m); // Parameter for intersection point
+//
+	    //vec2 intersection_point = circle_radius * dir; //intersection_t * m; // Calculate intersection point
+	    //float distance_to_mouse = length(p - m); // Distance from current point to mouse
+	    //float distance_to_center = length(p); // Distance from current point to center
+//
+    	//// Distance from current pixel to the line
+//
+		//float line_dist = abs(dot(p - m, normalize(vec2(-dir.y, dir.x)))); // Perpendicular distance to line
+
+		// Compute normalized direction vector from center to mouse
+	    vec2 dir = normalize(m);
+
+	    // Calculate the intersection point between the line and the circle
+	    float mouse_dist = length(m);
+	    float intersection_t = min(circle_radius, mouse_dist); // Limit the segment length to the smaller of the radius or the mouse distance
+	    vec2 intersection_point = intersection_t * dir;
+
+	    // Distance from current pixel to the line
+	    float line_dist = abs(dot(p - m, normalize(vec2(-dir.y, dir.x)))); // Perpendicular distance to line
+
+	    // Determine how far along the line the current pixel is
+	    float t_along_line = dot(p, dir);
+
+		// Yellow part: from center to intersection point (circle edge)
+	    if (t_along_line > 0.0 && t_along_line <= intersection_t && line_dist < 0.005) {
+	        col = mix(col, vec3(1.0, 1.0, 1.0), 1.0 - smoothstep(0.0, 0.005, line_dist));
+	    }
+		
+		// White part: from the circle's edge to the mouse position
+		if (mouse_dist < circle_radius) {
+		    // Mouse is inside the circle, draw the line from the mouse to the circle's edge
+		    if (t_along_line >= mouse_dist && t_along_line <= circle_radius && line_dist < 0.005) {
+		        col = mix(col, vec3(1.0, 0.0, 0.0), 1.0 - smoothstep(0.0, 0.005, line_dist));
+		    }
+		} else {
+		    // Mouse is outside the circle, draw the line from the circle's edge to the mouse
+		    if (t_along_line > intersection_t && t_along_line <= mouse_dist && line_dist < 0.005) {
+		        col = mix(col, vec3(1.0, 0.0, 0.0), 1.0 - smoothstep(0.0, 0.005, line_dist));
+		    }
+		}
+
+
+		
+		// White part: from intersection point to center
+		//float white_line_range = 0.0;
+		//if (d_mouse < 0.0) {
+			//white_line_range = circle_radius + d_mouse;
+		//} else {
+			//white_line_range = circle_radius;
+		//}
+	    //if (t_along_line > 0.0 && t_along_line <= white_line_range && line_dist < 0.005) {
+	        //col = mix(col, vec3(1.0, 1.0, 1.0), 1.0 - smoothstep(0.0, 0.005, line_dist));
+	    //}
+
+	    //// Yellow part: from mouse to circle edge
+	    //if (t_mouse > 0.0 && t_mouse <= intersection_t && dist_to_line < 0.005) {
+	        //col = mix(col, vec3(1.0, 1.0, 0.0), 1.0 - smoothstep(0.0, 0.005, dist_to_line));
+	    //}
+	    // White part: from circle edge to center
+	    //if (t_mouse > 0.0 && t_mouse <= 1.0 && dist_to_line < 0.005 && t_mouse < intersection_t) {
+	        //col = mix(col, vec3(1.0, 1.0, 1.0), 1.0 - smoothstep(0.0, 0.005, dist_to_line));
+	    //}
+	}
 
     COLOR = vec4(col, 1.0);
 }

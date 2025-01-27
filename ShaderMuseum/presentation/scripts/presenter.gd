@@ -47,6 +47,14 @@ var steps_to_frame_dict: Dictionary = {
 	35 : 5,
 	36 : 5,
 	37 : 6,
+	38 : 6,
+	39 : 6,
+	40 : 6,
+	41 : 6,
+	42 : 6,
+	43 : 6,
+	44 : 6,
+	45 : 7,
 }
 
 func _ready() -> void:
@@ -270,4 +278,35 @@ func execute_step():
 			frame[current_frame].get_node("Effekt3").visible = true
 		37:
 			# frame 6
+			frame[current_frame].get_node("Text").text = ""
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
+			frame[current_frame].get_node("Code").visible = false
+			frame[current_frame].get_node("Link").visible = false
+		38:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben"
+		39:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form"
+		40:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form\n- Signed = Innen negative Werte"
+		41:
+			# bullet point
+			frame[current_frame].get_node("Code").visible = false
+			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form\n- Signed = Innen negative Werte\n- Beispiel Kreis:"
+		42:
+			# code
+			frame[current_frame].get_node("Code").visible = true
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
+		43:
+			# animation
+			frame[current_frame].get_node("Effekt0").animate()
+			await get_tree().create_timer(2.0).timeout
+			animation_ongoing = false
+		44:
+			# link
+			frame[current_frame].get_node("Link").visible = true
+		45:
+			# frame 7
 			pass

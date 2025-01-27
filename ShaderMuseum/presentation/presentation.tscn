@@ -296,13 +296,15 @@ shader_parameter/angle = 34.0
 shader = ExtResource("34_vwtt8")
 shader_parameter/iMouse = null
 shader_parameter/color_rect_size = Vector2(1280, 1280)
+shader_parameter/reveal_time = 1.0
+shader_parameter/active_mouse = null
 
 [node name="Presentation" type="Node2D"]
 
 [node name="Presenter" type="Node" parent="." node_paths=PackedStringArray("player", "frame")]
 script = ExtResource("1_lm8r0")
 player = NodePath("../Player")
-frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6")]
+frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1bayy")
@@ -842,7 +844,7 @@ theme_override_fonts/normal_font = ExtResource("7_yb5up")
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 40
 bbcode_enabled = true
-text = "[color=#ffaa21][b]S[/b][/color]igned [color=#ffaa21][b]D[/b][/color]istance [color=#ffaa21][b]F[/b][/color]ield"
+text = "[color=#ffaa21][b]S[/b][/color]igned [color=#ffaa21][b]D[/b][/color]istance [color=#ffaa21][b]F[/b][/color]ield / [color=#ffaa21][b]F[/b][/color]unction"
 scroll_active = false
 autowrap_mode = 0
 
@@ -861,4 +863,51 @@ grow_vertical = 2
 scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
-text = "- Text"
+text = "- Funktionen um Formen zu beschreiben
+- Definiert Abstand zur Form
+- Signed = Innen negative Werte
+- Beispiel Kreis:"
+autowrap_mode = 3
+
+[node name="Code" type="CodeEdit" parent="Frame6"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 280.0
+offset_bottom = 430.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("9_rnjar")
+theme_override_font_sizes/font_size = 20
+text = "// Calculates signed distance to a circle
+float sdCircle(vec2 p, float r) {
+    return length(p) - r;
+}"
+
+[node name="Legende" type="RichTextLabel" parent="Frame6"]
+offset_left = -600.0
+offset_top = 450.0
+offset_right = 200.0
+offset_bottom = 550.0
+theme_override_fonts/normal_font = ExtResource("8_pgxwn")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[color=yellow]p = vector von Kreis-mittelpunkt zu Punkt P[/color]
+r = Radius vom Kreis
+[color=red]d = Distanz zum Kreis[/color]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Link" type="LinkButton" parent="Frame6"]
+offset_left = -600.0
+offset_top = 550.0
+offset_right = -200.0
+offset_bottom = 590.0
+scale = Vector2(1.5, 1.5)
+text = "SDF (signed distance function) - CGMatter (Youtube)"
+uri = "https://www.youtube.com/watch?v=LyQWZRfWotQ"
+
+[node name="Frame7" type="Node2D" parent="."]
