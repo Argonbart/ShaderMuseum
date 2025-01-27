@@ -133,7 +133,7 @@ func execute_step():
 		14:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:\n\n- Vertex Shader\n- Fragment Shader"
-			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	VERTEX.y += 50.0 * TIME;\n\nvoid fragment() {\n\n}"
+			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	//VERTEX.y += 50.0 * TIME;\n}\n\nvoid fragment() {\n\n}"
 			frame[current_frame].get_node("Shader").position.y = 0
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered", false)
 			frame[current_frame].get_node("Shader").time_passed = 0.0
@@ -141,7 +141,7 @@ func execute_step():
 		15:
 			# code point
 			frame[current_frame].get_node("Text").text = "- Englisch \"shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:\n\n- Vertex Shader\n- Fragment Shader"
-			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	VERTEX.y += 50.0 * TIME;\n\nvoid fragment() {\n	COLOR = vec4(1.0, 0.0, 0.0, 1.0);\n}"
+			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	//VERTEX.y += 50.0 * TIME;\n}\n\nvoid fragment() {\n	COLOR = vec4(1.0, 0.0, 0.0, 1.0);\n}"
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered_2", true)
 			frame[current_frame].get_node("Code").visible = true
 		16:
