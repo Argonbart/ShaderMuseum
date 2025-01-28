@@ -8,9 +8,9 @@ uniform float amplitude_x = 25.0;
 uniform float inclination = 50.0;
 
 void vertex() {
-	
+
 	float rotation_angle = -TIME * 1800.0; // Angle in degrees to be converted to radians.
-	
+
 // Convert rotation angle from degrees to radians.
 float rad = radians(rotation_angle);
 // Create a rotation matrix.

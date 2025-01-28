@@ -1,0 +1,158 @@
+[gd_resource type="Shader" format=3 uid="uid://d4hkbt5d4qgku"]
+
+[resource]
+code = "shader_type canvas_item;
+
+// set in script
+uniform vec2 light_position;
+uniform vec2 mouse_position;
+uniform vec2 screen_size;
+
+// extra variables
+uniform float circle_line_thickness = 0.5;
+
+void fragment() {
+	
+	// uv
+	vec2 screen_uv = SCREEN_UV * screen_size;
+	
+	// current
+	vec2 current_position = light_position;
+	
+	// uv to current
+	vec2 uv_to_current = current_position - screen_uv;
+	vec2 uv_to_current_dir = normalize(uv_to_current);
+	float uv_to_current_distance = length(uv_to_current);
+	
+	// light to mouse
+	vec2 light_to_mouse = mouse_position - light_position;
+	vec2 light_to_mouse_dir = normalize(light_to_mouse);
+	float light_to_mouse_distance = length(light_to_mouse);
+	
+	// output 
+	vec4 output_color = vec4(0.0);
+	
+	// dye occluder
+	if (texture_sdf(screen_uv_to_sdf(screen_uv / screen_size)) < 0.01) {
+		output_color = vec4(0.0, 0.0, 1.0, 1.0);
+	} else {
+		// algorithm
+		float accum = 0.0;
+		for (int i = 0; i < 20; i++) {
+		// while(accum < light_to_mouse_distance) {
+			uv_to_current_distance = length(current_position - screen_uv);
+			float d = 1.5 * texture_sdf(screen_uv_to_sdf(current_position / screen_size));
+			if (d < 0.01) {
+				if (uv_to_current_distance > -10.0 && uv_to_current_distance < 10.0) {
+					output_color = vec4(1.0, 0.0, 0.0, 1.0);
+				}
+			} else if (uv_to_current_distance > d - circle_line_thickness && uv_to_current_distance < d + circle_line_thickness) {
+				output_color = vec4(1.0);
+			}
+			accum += d;
+			current_position += d * light_to_mouse_dir;
+			if (accum > light_to_mouse_distance) {
+				break;
+			}
+		}
+	}
+	
+	COLOR = output_color;
+}
+
+// ---------------
+
+//shader_type canvas_item;
+//
+//uniform vec2 point_a; // Start point of the line (normalized)
+//uniform vec2 point_b; // End point of the line (normalized)
+//uniform float line_thickness = 0.001; // Thickness of the line (in normalized coordinates)
+//
+//void fragment() {
+    //vec2 uv = UV; // Normalize pixel coordinates
+//
+    //// Vector from A to B and A to current pixel
+    //vec2 ab = point_b - point_a;
+    //vec2 ap = uv - point_a;
+//
+    //// Project ap onto ab and clamp to the line segment
+    //float t = clamp(dot(ap, ab) / dot(ab, ab), 0.0, 1.0);
+    //vec2 closest_point = point_a + t * ab;
+//
+    //// Calculate distance to the closest point
+    //float distance = length(uv - closest_point);
+//
+    //// Visualize the line
+	//if (distance < line_thickness) {
+        //COLOR = vec4(1.0, 0.0, 0.0, 1.0); // Red line
+    //} else {
+        //COLOR = vec4(0.0, 0.0, 0.0, 1.0); // Black background
+    //}
+//}
+
+// ------------------------------------------------
+//
+//shader_type canvas_item;
+//
+//uniform vec2 light_position;
+////uniform vec2 mouse_position;
+//uniform vec2 screen_size;
+//uniform int a;
+//
+//void fragment() {
+	//vec2 screen_uv = SCREEN_UV * screen_size;
+	//
+	////vec2 light_to_mouse = mouse_position - light_position;
+	////vec2 mouse_to_light = light_position - mouse_position;
+	//vec2 light_to_uv = screen_uv - light_position;
+	//vec2 uv_to_light = light_position - screen_uv;
+	////vec2 light_to_mouse_dir = normalize(light_to_mouse);
+	//vec2 light_to_uv_dir = normalize(light_to_uv);
+	////vec2 mouse_to_light_dir = normalize(mouse_to_light);
+	//vec2 uv_to_light_dir = normalize(uv_to_light);
+	//float light_to_uv_distance = length(light_to_uv);
+	////float light_to_mouse_distance = length(light_to_mouse);
+	////float mouse_to_light_distance = length(mouse_to_light);
+	//float uv_to_light_distance = length(uv_to_light);
+	//
+    ////float t = clamp(dot(light_to_uv, light_to_mouse) / dot(light_to_mouse, light_to_mouse), 0.0, 1.0);
+    ////vec2 closest_point = light_position + t * light_to_mouse;
+	////float distance_to_line = length(screen_uv - closest_point);
+	////bool is_on_line = (distance_to_line < 0.001);
+	//
+	//vec4 occluder_color = vec4(1.0, 0.0, 1.0, 0.2);
+	//vec4 background_color = vec4(0.0, 0.0, 0.0, 1.0);
+	//vec4 red_color = vec4(1.0, 0.0, 0.0, 1.0);
+	//vec4 output_color = red_color;
+	//
+	//bool visible = false;
+	//
+	//vec2 at = screen_uv_to_sdf(SCREEN_UV + uv_to_light);
+	//float accum = 0.0;
+	//float temp = 1.0;
+	//int counter = 0;
+	//while (accum < light_to_uv_distance) {
+		//float d = texture_sdf(at);
+		//if (d < 0.01) {								// occluder in the way = dark
+			//output_color = vec4(0.0, 0.0, 0.0, 1.0);
+			//break;
+		//}
+		//accum += d;
+		//at += d * light_to_uv_dir;
+	//}
+	//if (accum >= light_to_uv_distance) {			// no occluder = light
+		//output_color = vec4(1.0, 1.0, 1.0, 1.0);
+	//}
+	//
+	////if (is_on_line && visible) {
+		////output_color = red_color;
+	////}
+	//
+	////if (temp < 1.0) {
+		////COLOR = vec4(0.0);
+	////} else {
+		////COLOR = vec4(1.0);
+	////}
+	//COLOR = output_color;
+	////COLOR = vec4(screen_uv.x / 1000.0, screen_uv.y / 1000.0, 0.0, 1.0);
+//}"

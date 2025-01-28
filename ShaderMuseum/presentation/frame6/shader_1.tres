@@ -85,7 +85,7 @@ void fragment() {
 	    float t_along_line = dot(p, dir);
 
 		// Yellow part: from center to intersection point (circle edge)
-	    if (t_along_line > 0.0 && t_along_line <= intersection_t && line_dist < 0.005) {
+		if (t_along_line > 0.0 && t_along_line <= intersection_t && line_dist < 0.005) {
 	        col = mix(col, vec3(1.0, 1.0, 1.0), 1.0 - smoothstep(0.0, 0.005, line_dist));
 	    }
 		
