@@ -306,6 +306,7 @@ shader_parameter/light_position = null
 shader_parameter/mouse_position = null
 shader_parameter/screen_size = null
 shader_parameter/circle_line_thickness = 0.5
+shader_parameter/line_thickness = 0.001
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fwbhe"]
 polygon = PackedVector2Array(-151, 131, -192, 231, -93, 298, -61, 252, -5, 189)
