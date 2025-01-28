@@ -307,6 +307,7 @@ shader_parameter/mouse_position = null
 shader_parameter/screen_size = null
 shader_parameter/circle_line_thickness = 0.5
 shader_parameter/line_thickness = 0.001
+shader_parameter/number_of_repetitions = 20
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fwbhe"]
 polygon = PackedVector2Array(-151, 131, -192, 231, -93, 298, -61, 252, -5, 189)
@@ -935,19 +936,19 @@ script = ExtResource("37_p68yi")
 light = NodePath("../Light")
 
 [node name="Light" type="ColorRect" parent="Frame7"]
-offset_left = 187.0
-offset_top = 230.0
-offset_right = 227.0
-offset_bottom = 270.0
+offset_left = 352.0
+offset_top = 350.0
+offset_right = 392.0
+offset_bottom = 390.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Frame7"]
 position = Vector2(-53, 224)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame7"]
-position = Vector2(-300, -14)
+position = Vector2(-307, 5)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
 [node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame7"]
-position = Vector2(-4, -69)
+position = Vector2(17, -103)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
