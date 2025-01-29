@@ -1,0 +1,57 @@
+[gd_resource type="Shader" format=3 uid="uid://ce544d8qam3vy"]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform vec2 color_rect_size;
+uniform vec2 screen_size; // Screen size passed as a uniform
+uniform vec2 mouse_pos; // Normalized mouse position
+uniform vec2 point_a; // Normalized position of A
+uniform vec2 point_b; // Normalized position of B
+uniform float factor;
+
+void fragment() {
+	vec2 offset = vec2(0.5, 0.0);
+	vec2 p = UV * 2.0 - 1.0 + offset; 													// uv point
+	vec2 m = (mouse_pos / color_rect_size) * 2.0 - 1.0 + offset;						// mouse point
+    vec2 a = (point_a / color_rect_size) * 2.0 - 1.0 + offset;							// line point a
+    vec2 b = (point_b / color_rect_size) * 2.0 - 1.0 + offset;							// line point b
+    
+    // Calculate closest point on line segment AB to the mouse
+    vec2 a_to_b = b - a; 																// Vector from A to B (along the line)
+	vec2 a_to_mouse = m - a;															// Vector from A to Mouse (to the line)
+    float a_to_b_length_squared = dot(a_to_b, a_to_b);									// ?
+	float s = dot(a_to_mouse, a_to_b);													// ? 
+    float t = clamp(s / a_to_b_length_squared, 0.0, 1.0);								// Projection factor
+    vec2 closest_point = a + t * a_to_b;												// Closest point on the line to the mouse
+
+	// Calculate closest point on line segment AB to UV
+	vec2 a_to_uv = p - a;																// Vector from A to UV (to the line)
+    float a_to_uv_length_squared = dot(a_to_b, a_to_b);									// ?
+	float s_uv = dot(a_to_uv, a_to_b);													// ? 
+    float t_uv = clamp(s_uv / a_to_uv_length_squared, 0.0, 1.0);						// Projection factor
+    vec2 closest_point_on_line_to_uv = a + t_uv * a_to_b;								// Closest point on the line to UV
+
+	// Caalculate closest point on line from mouse to the closest point on the AB line
+	vec2 mouse_to_closest = closest_point - m;											// Vector from Mouse to Line (along the line)
+	vec2 mouse_to_uv = p - m;															// Vector from Mouse to UV (to the line)
+	float mouse_to_closest_length_squared = dot(mouse_to_closest, mouse_to_closest);	// ?
+	float s2 = dot(mouse_to_uv, mouse_to_closest);										// ?
+	float t2 = clamp(s2 / mouse_to_closest_length_squared, 0.0, 1.0);					// Projection factor
+	vec2 closest_point_on_drawn_line = m + t2 * mouse_to_closest;						// Closest point on the line to draw
+	
+	vec4 output_color = vec4(0.0, 0.0, 0.0, 1.0);
+	
+	// draw line from A to B
+	if (distance(p, closest_point_on_line_to_uv) < 0.005) {
+		output_color = vec4(1.0, 1.0, 1.0, 1.0);
+	}
+	
+	// draw line from mouse to closest on the AB line
+	if (distance(p, closest_point_on_drawn_line) < 0.005) {
+		output_color = vec4(1.0, 0.3, 0.6, 1.0);
+	}
+	
+	COLOR = output_color;
+}
+"

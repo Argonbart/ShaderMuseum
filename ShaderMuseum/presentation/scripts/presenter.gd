@@ -55,6 +55,10 @@ var steps_to_frame_dict: Dictionary = {
 	43 : 6,
 	44 : 6,
 	45 : 7,
+	46 : 7,
+	47 : 7,
+	48 : 8,
+	49 : 9,
 }
 
 func _ready() -> void:
@@ -280,7 +284,9 @@ func execute_step():
 			# frame 6
 			frame[current_frame].get_node("Text").text = ""
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
 			frame[current_frame].get_node("Code").visible = false
+			frame[current_frame].get_node("Legende").visible = false
 			frame[current_frame].get_node("Link").visible = false
 		38:
 			# bullet point
@@ -294,19 +300,42 @@ func execute_step():
 		41:
 			# bullet point
 			frame[current_frame].get_node("Code").visible = false
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form\n- Signed = Innen negative Werte\n- Beispiel Kreis:"
 		42:
 			# code
 			frame[current_frame].get_node("Code").visible = true
-			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
-		43:
-			# animation
+			frame[current_frame].get_node("Legende").visible = false
 			frame[current_frame].get_node("Effekt0").animate()
 			await get_tree().create_timer(2.0).timeout
 			animation_ongoing = false
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
+		43:
+			# animation
+			frame[current_frame].get_node("Legende").visible = true
+			frame[current_frame].get_node("Link").visible = false
 		44:
 			# link
 			frame[current_frame].get_node("Link").visible = true
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", true)
 		45:
 			# frame 7
+			frame[current_frame].get_node("Text").visible = true
+			frame[current_frame].get_node("Code").visible = false
+			frame[current_frame].get_node("Effekt0").visible = false
+		46:
+			# code exercise
+			frame[current_frame].get_node("Text").visible = false
+			frame[current_frame].get_node("Code").visible = true
+			frame[current_frame].get_node("Effekt0").visible = false
+		47:
+			# answer
+			frame[current_frame].get_node("Text").visible = false
+			frame[current_frame].get_node("Code").visible = false
+			frame[current_frame].get_node("Effekt0").visible = true
+		48:
+			# frame 8
+			pass
+		49:
+			# frame 9
 			pass
