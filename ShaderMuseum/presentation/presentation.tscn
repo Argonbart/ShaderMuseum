@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=92 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
@@ -47,6 +47,7 @@
 [ext_resource type="Script" path="res://presentation/frame8/effekt_0.gd" id="39_fgsva"]
 [ext_resource type="Shader" path="res://presentation/frame10/hard_shadows/color_rect.gdshader" id="40_kithv"]
 [ext_resource type="Script" path="res://presentation/frame10/hard_shadows/color_rect.gd" id="41_fn4c0"]
+[ext_resource type="SpriteFrames" uid="uid://cgn0qcfxci775" path="res://presentation/sprites/circle_sdf.gif" id="42_q3wm7"]
 
 [sub_resource type="Environment" id="Environment_c8oj4"]
 background_mode = 3
@@ -1157,6 +1158,13 @@ offset_bottom = 590.0
 scale = Vector2(1.5, 1.5)
 text = "SDF (signed distance function) - CGMatter (Youtube)"
 uri = "https://www.youtube.com/watch?v=LyQWZRfWotQ"
+
+[node name="Gif" type="AnimatedSprite2D" parent="Frame6"]
+position = Vector2(389, 326)
+scale = Vector2(2.325, 2.325)
+sprite_frames = ExtResource("42_q3wm7")
+animation = &"gif"
+autoplay = "gif"
 
 [node name="Frame7" type="Node2D" parent="."]
 position = Vector2(14000, 0)

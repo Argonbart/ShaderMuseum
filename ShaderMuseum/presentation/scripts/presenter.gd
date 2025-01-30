@@ -81,8 +81,9 @@ var steps_to_frame_dict: Dictionary = {
 	61 : 6,
 	62 : 6,
 	63 : 6,
+	64 : 6,
 
-	64 : 7,
+	65 : 7,
 }
 
 var button_to_frame_dict: Dictionary =  {
@@ -443,6 +444,7 @@ func execute_step():
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Legende").visible = false
 			frame[current_frame].get_node("Link").visible = false
+			frame[current_frame].get_node("Gif").visible = false
 		57:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben"
@@ -457,26 +459,31 @@ func execute_step():
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form\n- Signed = Innen negative Werte\n- Beispiel Kreis:"
+			frame[current_frame].get_node("Effekt0").animate()
+			await get_tree().create_timer(2.0).timeout
+			animation_ongoing = false
 		61:
 			# code
 			frame[current_frame].get_node("Code").visible = true
 			frame[current_frame].get_node("Legende").visible = false
-			frame[current_frame].get_node("Effekt0").animate()
-			await get_tree().create_timer(2.0).timeout
-			animation_ongoing = false
-			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
+			frame[current_frame].get_node("Gif").visible = false
 		62:
+			# gif
+			frame[current_frame].get_node("Gif").visible = true
+		63:
 			# animation
 			frame[current_frame].get_node("Legende").visible = true
 			frame[current_frame].get_node("Link").visible = false
-		63:
+			frame[current_frame].get_node("Gif").visible = false
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
+		64:
 			# link
 			frame[current_frame].get_node("Link").visible = true
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", true)
 
 		## ---------------------------------- FRAME 7 ----------------------------------------------##
 
-		64:
+		65:
 			# frame 7
 			frame[current_frame].get_node("Text").visible = true
 			frame[current_frame].get_node("Code").visible = false

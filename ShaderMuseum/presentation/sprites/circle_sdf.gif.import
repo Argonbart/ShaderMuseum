@@ -1,0 +1,15 @@
+[remap]
+
+importer="import_gif_to_sprite_frames"
+type="SpriteFrames"
+uid="uid://cgn0qcfxci775"
+path="res://.godot/imported/circle_sdf.gif-af3114a83a757e35d5ff8488763f2021.tres"
+
+[deps]
+
+source_file="res://presentation/sprites/circle_sdf.gif"
+dest_files=["res://.godot/imported/circle_sdf.gif-af3114a83a757e35d5ff8488763f2021.tres"]
+
+[params]
+
+frames_per_second=30
