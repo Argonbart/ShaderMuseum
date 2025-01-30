@@ -24,9 +24,9 @@ func _process(delta):
 		is_moving_right = false
 	
 	# manuell movement
-	var direction = Input.get_axis("move_left", "move_right")
-	if direction:
-		position.x += direction * SPEED * delta
+	#var direction = Input.get_axis("move_left", "move_right")
+	#if direction:
+		#position.x += direction * SPEED * delta
 	
 	# frame movement
 	if !is_moving:
@@ -53,3 +53,13 @@ func move_frame_to_the_right():
 
 func move_to_frame(index):
 	target_position_x = index * 2000.0
+
+func move_to_frame_via_button(current_frame, new_frame):
+	is_moving = true
+	if new_frame == current_frame:
+		return
+	if new_frame < current_frame:
+		is_moving_left = true
+	if new_frame > current_frame:
+		is_moving_right = true
+	target_position_x = new_frame * 2000.0

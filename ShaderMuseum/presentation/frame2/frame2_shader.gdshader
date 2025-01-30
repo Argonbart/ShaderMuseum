@@ -4,10 +4,11 @@ uniform bool is_triggered;
 uniform bool is_triggered_2;
 uniform float move_speed;
 uniform float time_passed;
+uniform float time_passed_reset;
 
 void vertex() {
 	if (is_triggered) {
-		VERTEX.y += move_speed * time_passed;
+		VERTEX.y += move_speed * (mod(time_passed, time_passed_reset));
 	}
 }
 

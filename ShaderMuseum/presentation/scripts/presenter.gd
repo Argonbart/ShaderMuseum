@@ -2,6 +2,7 @@ extends Node
 
 @export var player: CharacterBody2D
 @export var frame: Array[Node2D]
+@export var buttons: Array[Button]
 
 var current_frame: int = 0
 var current_step: int = 0
@@ -9,15 +10,18 @@ var current_step: int = 0
 var animation_ongoing = false
 
 var steps_to_frame_dict: Dictionary = {
+
 	0 : 0,
+
 	1 : 1,
 	2 : 1,
 	3 : 1,
 	4 : 1,
-	5 : 2,
-	6 : 2,
-	7 : 2,
-	8 : 2,
+	5 : 1,
+	6 : 1,
+	7 : 1,
+	8 : 1,
+
 	9 : 2,
 	10 : 2,
 	11 : 2,
@@ -25,44 +29,88 @@ var steps_to_frame_dict: Dictionary = {
 	13 : 2,
 	14 : 2,
 	15 : 2,
-	16 : 3,
-	17 : 3,
-	18 : 3,
+	16 : 2,
+	17 : 2,
+	18 : 2,
+
 	19 : 3,
 	20 : 3,
-	21 : 4,
-	22 : 4,
-	23 : 4,
-	24 : 4,
-	25 : 4,
-	26 : 4,
-	27 : 5,
-	28 : 5,
-	29 : 5,
-	30 : 5,
-	31 : 5,
-	32 : 5,
-	33 : 5,
-	34 : 5,
-	35 : 5,
-	36 : 5,
-	37 : 6,
-	38 : 6,
-	39 : 6,
-	40 : 6,
-	41 : 6,
-	42 : 6,
-	43 : 6,
-	44 : 6,
-	45 : 7,
-	46 : 7,
-	47 : 7,
-	48 : 8,
-	49 : 9,
+	21 : 3,
+	22 : 3,
+	23 : 3,
+	24 : 3,
+	25 : 3,
+	26 : 3,
+	27 : 3,
+	28 : 3,
+	29 : 3,
+
+	30 : 4,
+	31 : 4,
+	32 : 4,
+	33 : 4,
+	34 : 4,
+	35 : 4,
+	36 : 4,
+
+	37 : 5,
+	38 : 5,
+	39 : 5,
+	40 : 5,
+	41 : 5,
+	42 : 5,
+	43 : 5,
+	44 : 5,
+	45 : 5,
+	46 : 5,
+	47 : 5,
+	48 : 5,
+	49 : 5,
+	50 : 5,
+	51 : 5,
+	52 : 5,
+	53 : 5,
+	54 : 5,
+	55 : 5,
+
+	56 : 6,
+	57 : 6,
+	58 : 6,
+	59 : 6,
+	60 : 6,
+	61 : 6,
+	62 : 6,
+	63 : 6,
+
+	64 : 7,
+}
+
+var button_to_frame_dict: Dictionary =  {
+	0 : 0,
+	1 : 1,
+	2 : 9,
+	3 : 19,
+	4 : 30,
+	5 : 37,
+	6 : 56
 }
 
 func _ready() -> void:
+	initiate_buttons()
+
+func initiate_buttons():
+	for i in range(len(buttons)):
+		buttons[i].connect("pressed", func(): button_pressed(i))
+
+func button_pressed(button_idx: int):
+	if animation_ongoing:
+		return
+	var frame_idx = button_to_frame_dict[button_idx]
+	player.move_to_frame_via_button(current_frame, button_idx)
+	current_frame = button_idx
+	current_step = frame_idx
 	print("Frame: ", current_frame, " - Step: ", current_step)
+	execute_step()
 
 func next():
 	if animation_ongoing:
@@ -96,8 +144,15 @@ func previous():
 
 func execute_step():
 	match current_step:
+
+		## ---------------------------------- STRUCTURE ----------------------------------------------##
+
 		0:
-			pass	# title
+			# title
+			pass
+
+		## ---------------------------------- FRAME 1 ----------------------------------------------##
+
 		1:
 			# frame 1
 			frame[current_frame].get_node("Text").text = ""
@@ -106,76 +161,120 @@ func execute_step():
 			frame[current_frame].get_node("Text").text = "- Was sind Shader?"
 		3:
 			# bullet point
-			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen"
+			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen (Vertex Shader)"
 		4:
 			# bullet point
-			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen\n- Schatten"
+			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen (Vertex Shader)\n- Visuelle Effekte (Fragment Shader)"
 		5:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen (Vertex Shader)\n- Visuelle Effekte (Fragment Shader)\n- Signed Distance Fields / Functions"
+		6:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen (Vertex Shader)\n- Visuelle Effekte (Fragment Shader)\n- Signed Distance Fields / Functions\n- Ray Marching"
+		7:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen (Vertex Shader)\n- Visuelle Effekte (Fragment Shader)\n- Signed Distance Fields / Functions\n- Ray Marching\n- Schatten"
+		8:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Was sind Shader?\n- Sprite Animationen (Vertex Shader)\n- Visuelle Effekte (Fragment Shader)\n- Signed Distance Fields / Functions\n- Ray Marching\n- Schatten\n- Abschluss"
+
+		## ---------------------------------- FRAME 2 ----------------------------------------------##
+
+		9:
 			# frame 2
 			frame[current_frame].get_node("Text").text = ""
 			frame[current_frame].get_node("Code").text = ""
 			frame[current_frame].get_node("Code").visible = false
-		6:
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\""
-		7:
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte"
-		8:
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D"
-		9:
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU"
+			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered", false)
+			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered_2", false)
 		10:
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex"
-			frame[current_frame].get_node("Code").visible = false
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte"
 		11:
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:"
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D"
+		12:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU"
+		13:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU\n- Teils komplex"
+			frame[current_frame].get_node("Code").visible = false
+		14:
+			# show code block
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU\n- Teils komplex\n\nAufteilung in:"
 			frame[current_frame].get_node("Code").visible = true
 			frame[current_frame].get_node("Code").text = ""
-		12:
-			# code point
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:\n\n- Vertex Shader"
+		15:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU\n- Teils komplex\n\nAufteilung in:\n- Vertex Shader"
 			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n\n}"
 			frame[current_frame].get_node("Shader").position.y = 0
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered", false)
 			frame[current_frame].get_node("Shader").time_passed = 0.0
-		13:
-			# code point
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:\n\n- Vertex Shader"
+		16:
+			# vertex animation
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU\n- Teils komplex\n\nAufteilung in:\n- Vertex Shader"
 			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	VERTEX.y += 50.0 * TIME;\n}"
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered", true)
-		14:
+		17:
 			# bullet point
-			frame[current_frame].get_node("Text").text = "- Englisch \"to shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:\n\n- Vertex Shader\n- Fragment Shader"
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU\n- Teils komplex\n\nAufteilung in:\n- Vertex Shader\n- Fragment Shader"
 			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	//VERTEX.y += 50.0 * TIME;\n}\n\nvoid fragment() {\n\n}"
 			frame[current_frame].get_node("Shader").position.y = 0
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered", false)
 			frame[current_frame].get_node("Shader").time_passed = 0.0
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered_2", false)
-		15:
-			# code point
-			frame[current_frame].get_node("Text").text = "- Englisch \"shade\"\n- Rendering-Effekte\n- Häufig 3D, heute 2D\n- Parallelisiert auf GPU\n- Schnell komplex\n- Aufteilung in:\n\n- Vertex Shader\n- Fragment Shader"
+		18:
+			# fragment animation
+			frame[current_frame].get_node("Text").text = "- Rendering-Effekte\n- Typisch in 3D, hier 2D\n- Programme auf GPU\n- Teils komplex\n\nAufteilung in:\n- Vertex Shader\n- Fragment Shader"
 			frame[current_frame].get_node("Code").text = "shader_type canvas_item;\n\nvoid vertex() {\n	//VERTEX.y += 50.0 * TIME;\n}\n\nvoid fragment() {\n	COLOR = vec4(1.0, 0.0, 0.0, 1.0);\n}"
 			frame[current_frame].get_node("Shader").material.set_shader_parameter("is_triggered_2", true)
 			frame[current_frame].get_node("Code").visible = true
-		16:
+
+		## ---------------------------------- FRAME 3 ----------------------------------------------##
+
+		19:
 			# frame 3
 			frame[current_frame].get_node("Text").text = ""
 			frame[current_frame].get_node("CPUvsGPU").visible = false
 			frame[current_frame].get_node("BlackBox").visible = true
-		17:
-			# bullet point
-			frame[current_frame].get_node("Text").text = "Skript läuft auf CPU\n- Mächtiger\n- Serialisiert\n- Wenige Kerne"
-			frame[current_frame].get_node("CPUvsGPU").visible = true
-		18:
-			# bullet point
-			frame[current_frame].get_node("Text").text = "Skript läuft auf CPU\n- Mächtiger\n- Serialisiert\n- Wenige Kerne\n\nShader läuft auf GPU\n- Limitiert\n- Parallelisiert\n- Viele Kerne"
-			frame[current_frame].get_node("BlackBox").visible = false
-		19:
-			# bullet point
-			frame[current_frame].get_node("Text").text = "Skript läuft auf CPU\n- Mächtiger\n- Serialisiert\n- Wenige Kerne\n\nShader läuft auf GPU\n- Limitiert\n- Parallelisiert\n- Viele Kerne\n\nKein Gedächtnis zwischen Frames"
 		20:
 			# bullet point
-			frame[current_frame].get_node("Text").text = "Skript läuft auf CPU\n- Mächtiger\n- Serialisiert\n- Wenige Kerne\n\nShader läuft auf GPU\n- Limitiert\n- Parallelisiert\n- Viele Kerne\n\nKein Gedächtnis zwischen Frames\nInput nur über uniforms möglich"
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU"
+			frame[current_frame].get_node("CPUvsGPU").visible = true
 		21:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne"
+		22:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell"
+		23:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher"
+		24:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher\n\nShader laufen auf GPU"
+			frame[current_frame].get_node("BlackBox").visible = false
+		25:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher\n\nShader laufen auf GPU\n- Viele kleinere Kerne"
+		26:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher\n\nShader laufen auf GPU\n- Viele kleinere Kerne\n- Paralellisiert"
+		27:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher\n\nShader laufen auf GPU\n- Viele kleinere Kerne\n- Paralellisiert\n- Limitierter Speicher"
+		28:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher\n\nShader laufen auf GPU\n- Viele kleinere Kerne\n- Paralellisiert\n- Limitierter Speicher\n\nKein Gedächtnis zwischen Frames"
+		29:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "Skripte laufen auf CPU\n- Wenige mächtige Kerne\n- Serialisiert / Sequenziell\n- Viel Speicher\n\nShader laufen auf GPU\n- Viele kleinere Kerne\n- Paralellisiert\n- Limitierter Speicher\n\nKein Gedächtnis zwischen Frames\nInput nur limitiert über uniforms möglich"
+
+		## ---------------------------------- FRAME 4 ----------------------------------------------##
+
+		30:
 			# frame 4
 			frame[current_frame].get_node("Text").text = ""
 			frame[current_frame].get_node("Godot1").visible = false
@@ -191,7 +290,7 @@ func execute_step():
 			frame[current_frame].get_node("Godot11").visible = false
 			frame[current_frame].get_node("Godot12").visible = false
 			frame[current_frame].get_node("Godot13").visible = false
-		22:
+		31:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "Transformationen:"
 			frame[current_frame].get_node("Godot1").visible = false
@@ -199,8 +298,8 @@ func execute_step():
 			frame[current_frame].get_node("Godot3").visible = false
 			frame[current_frame].get_node("Godot4").visible = false
 			frame[current_frame].get_node("Godot5").visible = false
-		23:
-			# bullet point
+		32:
+			# godots animations
 			frame[current_frame].get_node("Text").text = "Transformationen:\n- Position"
 			animation_ongoing = true
 			await get_tree().create_timer(0.5).timeout
@@ -218,8 +317,8 @@ func execute_step():
 			frame[current_frame].get_node("Godot7").visible = false
 			frame[current_frame].get_node("Godot8").visible = false
 			frame[current_frame].get_node("Godot9").visible = false
-		24:
-			# bullet point
+		33:
+			# godots animations
 			frame[current_frame].get_node("Text").text = "Transformationen:\n- Position\n- Rotation"
 			animation_ongoing = true
 			frame[current_frame].get_node("Godot6").visible = true
@@ -230,8 +329,8 @@ func execute_step():
 			await get_tree().create_timer(0.5).timeout
 			frame[current_frame].get_node("Godot9").visible = true
 			animation_ongoing = false
-		25:
-			# bullet point
+		34:
+			# godots animations
 			frame[current_frame].get_node("Text").text = "Transformationen:\n- Position\n- Rotation\n- Skalierung"
 			animation_ongoing = true
 			frame[current_frame].get_node("Godot10").visible = true
@@ -239,8 +338,8 @@ func execute_step():
 			frame[current_frame].get_node("Godot11").visible = true
 			await get_tree().create_timer(0.5).timeout
 			animation_ongoing = false
-		26:
-			# bullet point
+		35:
+			# godots animations
 			frame[current_frame].get_node("Text").text ="Transformationen:\n- Position\n- Rotation\n- Skalierung\n- Andere"
 			animation_ongoing = true
 			frame[current_frame].get_node("Godot12").visible = true
@@ -248,39 +347,95 @@ func execute_step():
 			frame[current_frame].get_node("Godot13").visible = true
 			await get_tree().create_timer(0.5).timeout
 			animation_ongoing = false
-		27:
+		36:
+			# bullet point
+			frame[current_frame].get_node("Text").text ="Transformationen:\n- Position\n- Rotation\n- Skalierung\n- Andere\n\n\n\n\n\nTransformation rein visuell!\nSpielzustand verändert sich nicht."
+
+		## ---------------------------------- FRAME 5 ----------------------------------------------##
+
+		37:
 			# frame 5
 			frame[current_frame].get_node("Text").text = ""
-			frame[current_frame].get_node("Godot1").visible = false
-			frame[current_frame].get_node("Godot2").visible = false
-			frame[current_frame].get_node("Godot3").visible = false
 			frame[current_frame].get_node("Effekt0").visible = false
 			frame[current_frame].get_node("Effekt1").visible = false
 			frame[current_frame].get_node("Effekt2").visible = false
 			frame[current_frame].get_node("Effekt3").visible = false
-		28:
+			frame[current_frame].get_node("Godot1").visible = false
+			frame[current_frame].get_node("Godot2").visible = false
+			frame[current_frame].get_node("Godot3").visible = false
+			frame[current_frame].get_node("Godot4").visible = false
+			frame[current_frame].get_node("Godot5").visible = false
+			frame[current_frame].get_node("Godot6").visible = false
+			frame[current_frame].get_node("Godot1").material.set_shader_parameter("green_active", false)
+			frame[current_frame].get_node("Godot1").material.set_shader_parameter("half_red_active", false)
+			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_blured", false)
+			frame[current_frame].get_node("Godot3").material.set_shader_parameter("is_active", false)
+		38:
 			# bullet point
-			frame[current_frame].get_node("Text").text = "- Endlose Möglichkeiten"
-		29:
-			# bullet point
-			frame[current_frame].get_node("Text").text = "- Endlose Möglichkeiten\n- Künstlerische Freiheit"
-		30:
-			# bullet point
-			frame[current_frame].get_node("Text").text = "- Endlose Möglichkeiten\n- Künstlerische Freiheit\n- Oft komplizierte Mathematik"
-		31:
+			frame[current_frame].get_node("Text").text = "- Filter"
 			frame[current_frame].get_node("Godot1").visible = true
-		32:
+			frame[current_frame].get_node("Godot1").material.set_shader_parameter("green_active", false)
+		39:
+			# turn godot 1 green
+			frame[current_frame].get_node("Godot1").material.set_shader_parameter("green_active", true)
+			frame[current_frame].get_node("Godot1").material.set_shader_parameter("half_red_active", false)
+		40:
+			# turn godot 1 half-half
+			frame[current_frame].get_node("Godot1").material.set_shader_parameter("half_red_active", true)
+		41:
+			# turn godot 2 on
 			frame[current_frame].get_node("Godot2").visible = true
-		33:
+			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_red", false)
+		42:
+			# turn godot 2 red
+			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_red", true)
+		43:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Filter\n- Verzerrungseffekte"
+			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_red", false)
+			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_blured", false)
+		44:
+			# turn godot 2 blurry
+			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_blured", true)
+		45:
+			# turn godot 3 on
 			frame[current_frame].get_node("Godot3").visible = true
-		34:
+			frame[current_frame].get_node("Godot3").material.set_shader_parameter("is_active", false)
+		46:
+			# turn godot 3 wobbly
+			frame[current_frame].get_node("Godot3").material.set_shader_parameter("is_active", true)
+		47:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Filter\n- Verzerrungseffekte\n- Effekte zum Hervorheben"
+		48:
+			# turn godot 4 on
+			frame[current_frame].get_node("Godot4").visible = true
+		49:
+			# turn godot 5 on
+			frame[current_frame].get_node("Godot5").visible = true
+		50:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Filter\n- Verzerrungseffekte\n- Effekte zum Hervorheben\n- Animationseffekte"
+		51:
+			# turn godot 6 on
+			frame[current_frame].get_node("Godot6").visible = true
+		52:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Filter\n- Verzerrungseffekte\n- Effekte zum Hervorheben\n- Animationseffekte\n- Und vieles mehr ..."
+		53:
+			# turn on big effect
 			frame[current_frame].get_node("Effekt0").visible = true
 			frame[current_frame].get_node("Effekt1").visible = true
-		35:
+		54:
+			# turn on big effect
 			frame[current_frame].get_node("Effekt2").visible = true
-		36:
+		55:
+			# turn on big effect
 			frame[current_frame].get_node("Effekt3").visible = true
-		37:
+
+		## ---------------------------------- FRAME 6 ----------------------------------------------##
+
+		56:
 			# frame 6
 			frame[current_frame].get_node("Text").text = ""
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
@@ -288,21 +443,21 @@ func execute_step():
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Legende").visible = false
 			frame[current_frame].get_node("Link").visible = false
-		38:
+		57:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben"
-		39:
+		58:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form"
-		40:
+		59:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form\n- Signed = Innen negative Werte"
-		41:
+		60:
 			# bullet point
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("reveal_time", 0.0)
 			frame[current_frame].get_node("Text").text = "- Funktionen um Formen zu beschreiben\n- Definiert Abstand zur Form\n- Signed = Innen negative Werte\n- Beispiel Kreis:"
-		42:
+		61:
 			# code
 			frame[current_frame].get_node("Code").visible = true
 			frame[current_frame].get_node("Legende").visible = false
@@ -310,15 +465,18 @@ func execute_step():
 			await get_tree().create_timer(2.0).timeout
 			animation_ongoing = false
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
-		43:
+		62:
 			# animation
 			frame[current_frame].get_node("Legende").visible = true
 			frame[current_frame].get_node("Link").visible = false
-		44:
+		63:
 			# link
 			frame[current_frame].get_node("Link").visible = true
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", true)
-		45:
+
+		## ---------------------------------- FRAME 7 ----------------------------------------------##
+
+		64:
 			# frame 7
 			frame[current_frame].get_node("Text").visible = true
 			frame[current_frame].get_node("Code").visible = false
@@ -338,4 +496,7 @@ func execute_step():
 			pass
 		49:
 			# frame 9
+			pass
+		50:
+			# frame 10
 			pass

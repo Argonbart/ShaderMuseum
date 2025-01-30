@@ -8,7 +8,7 @@ shader_type canvas_item;
 uniform vec2 iMouse;
 uniform vec2 color_rect_size;
 uniform float reveal_time = 1.0; // Animation progress [0.0 to 1.0]
-uniform bool active_mouse;
+uniform bool active_mouse = false;
 uniform bool changing_over_time = false;
 uniform float time_passed = 0.0;
 
@@ -52,8 +52,8 @@ void fragment() {
     // Highlight mouse position
 	if (active_mouse) {
 	    float d_mouse = sdCircle(m, circle_radius);
-	    col = mix(col, vec3(1.0, 0.3, 0.6), 1.0 - smoothstep(0.0, 0.005, abs(length(p - m) - abs(d_mouse)) - 0.0025));
-	    col = mix(col, vec3(1.0, 0.3, 0.6), 1.0 - smoothstep(0.0, 0.005, length(p - m) - 0.015));
+	    col = mix(col, vec3(1.0, 0.1, 0.2), 1.0 - smoothstep(0.0, 0.005, abs(length(p - m) - abs(d_mouse)) - 0.0025));
+	    col = mix(col, vec3(1.0, 0.1, 0.2), 1.0 - smoothstep(0.0, 0.005, length(p - m) - 0.015));
 	
 		// Highlight mouse position with a line
 		//vec2 mouse_to_circle_middle = p - m;
@@ -106,12 +106,12 @@ void fragment() {
 		if (mouse_dist < circle_radius) {
 		    // Mouse is inside the circle, draw the line from the mouse to the circle's edge
 		    if (t_along_line >= mouse_dist && t_along_line <= circle_radius && line_dist2 > -0.025 && line_dist2 < -0.02) {
-		        col = mix(col, vec3(1.0, 0.3, 0.6), 1.0 - smoothstep(0.0, 0.005, line_dist2));
+		        col = mix(col, vec3(1.0, 0.1, 0.2), 1.0 - smoothstep(0.0, 0.005, line_dist2));
 		    }
 		} else {
 		    // Mouse is outside the circle, draw the line from the circle's edge to the mouse
 		    if (t_along_line > intersection_t && t_along_line <= mouse_dist && line_dist2 > -0.025 && line_dist2 < -0.02) {
-		        col = mix(col, vec3(1.0, 0.3, 0.6), 1.0 - smoothstep(0.0, 0.005, line_dist2));
+		        col = mix(col, vec3(1.0, 0.1, 0.2), 1.0 - smoothstep(0.0, 0.005, line_dist2));
 		    }
 		}
 

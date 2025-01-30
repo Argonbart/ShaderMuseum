@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=91 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
@@ -10,7 +10,10 @@
 [ext_resource type="FontFile" uid="uid://b1ytffl6n528u" path="res://fonts/Besty Beige.ttf" id="7_yb5up"]
 [ext_resource type="FontFile" uid="uid://df1hjkq32lfto" path="res://fonts/Cheese Market.otf" id="8_pgxwn"]
 [ext_resource type="Script" path="res://presentation/frame2/frame2_shader.gd" id="9_335i0"]
+[ext_resource type="Shader" uid="uid://cgols8fpkoqh2" path="res://presentation/overview/godot_swimming.tres" id="9_iriar"]
 [ext_resource type="FontFile" uid="uid://bxljwiekotetl" path="res://fonts/PixelCode-Thin-Italic.otf" id="9_rnjar"]
+[ext_resource type="Texture2D" uid="uid://c7n7idn1tmmvb" path="res://presentation/sprites/godot.png" id="10_xva2m"]
+[ext_resource type="Script" path="res://presentation/overview/godot_swimming.gd" id="11_3lss4"]
 [ext_resource type="Texture2D" uid="uid://bh5pryqhiqode" path="res://presentation/frame3/cpu_vs_gpu.png" id="12_5wg3g"]
 [ext_resource type="Shader" path="res://presentation/frame4/godot_schwarm_4.gdshader" id="14_gpcwi"]
 [ext_resource type="Shader" path="res://presentation/frame4/godot_schwarm_1.gdshader" id="15_u6i5c"]
@@ -30,8 +33,11 @@
 [ext_resource type="Shader" path="res://presentation/frame5/effect_3.gdshader" id="28_ce7qe"]
 [ext_resource type="Shader" path="res://presentation/frame5/effect_4.gdshader" id="29_5tac0"]
 [ext_resource type="Shader" path="res://presentation/frame5/effect_5.gdshader" id="30_b0qrc"]
+[ext_resource type="Shader" uid="uid://df5hm1wr7tovg" path="res://presentation/frame5/filter_1.tres" id="30_r71p6"]
 [ext_resource type="Shader" path="res://presentation/frame5/effect_6.gdshader" id="31_n4urg"]
+[ext_resource type="Shader" uid="uid://j3xan7orcykc" path="res://presentation/frame5/filter_2.tres" id="32_584c8"]
 [ext_resource type="Shader" path="res://presentation/frame5/effect_7.gdshader" id="32_bjjaq"]
+[ext_resource type="Shader" uid="uid://baq4fwbg22jdx" path="res://presentation/frame5/filter_3.tres" id="33_oi46a"]
 [ext_resource type="Texture2D" uid="uid://jh6jn035prxj" path="res://presentation/sprites/white_square.png" id="33_ygtn6"]
 [ext_resource type="Shader" uid="uid://dmxowylempx5u" path="res://presentation/frame6/shader_1.tres" id="34_vwtt8"]
 [ext_resource type="Script" path="res://presentation/frame6/effekt_0.gd" id="35_7rtub"]
@@ -39,13 +45,16 @@
 [ext_resource type="Shader" uid="uid://d4hkbt5d4qgku" path="res://presentation/frame8/frame_7_effect_0.tres" id="36_xqyhy"]
 [ext_resource type="Script" path="res://presentation/frame7/effekt_0.gd" id="37_p68yi"]
 [ext_resource type="Script" path="res://presentation/frame8/effekt_0.gd" id="39_fgsva"]
+[ext_resource type="Shader" path="res://presentation/frame10/hard_shadows/color_rect.gdshader" id="40_kithv"]
+[ext_resource type="Script" path="res://presentation/frame10/hard_shadows/color_rect.gd" id="41_fn4c0"]
 
-[sub_resource type="Environment" id="Environment_1bayy"]
+[sub_resource type="Environment" id="Environment_c8oj4"]
 background_mode = 3
 glow_enabled = true
-glow_intensity = 2.0
+glow_intensity = 1.5
 glow_strength = 1.5
 glow_blend_mode = 0
+glow_hdr_threshold = 1.1
 
 [sub_resource type="QuadMesh" id="QuadMesh_8r0xo"]
 size = Vector2(2000, 40)
@@ -120,12 +129,20 @@ shader_parameter/fill_tex = ExtResource("5_4f437")
 variation_embolden = 1.0
 spacing_glyph = 60
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckm0n"]
+shader = ExtResource("9_iriar")
+shader_parameter/Smooth = true
+shader_parameter/width = 32.0
+shader_parameter/pixel_size = 2
+shader_parameter/width_speed = 3.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkm43"]
 shader = ExtResource("6_jupxd")
 shader_parameter/is_triggered = false
 shader_parameter/is_triggered_2 = null
 shader_parameter/move_speed = 2000.0
 shader_parameter/time_passed = null
+shader_parameter/time_passed_reset = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v74gj"]
 shader = ExtResource("14_gpcwi")
@@ -148,16 +165,12 @@ shader = ExtResource("16_rmbju")
 shader_parameter/do_abs = false
 shader_parameter/do_quantize = false
 shader_parameter/quantize_to = 0.7
-shader_parameter/sine_amplitude = Vector2(0, 100)
-shader_parameter/sine_speed = Vector2(0, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cm6q4"]
 shader = ExtResource("16_rfk7k")
 shader_parameter/do_abs = false
 shader_parameter/do_quantize = false
 shader_parameter/quantize_to = 0.7
-shader_parameter/sine_amplitude = Vector2(0, 40)
-shader_parameter/sine_speed = Vector2(0, 4)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xjvjf"]
 shader = ExtResource("17_vmwkw")
@@ -280,6 +293,36 @@ shader_parameter/spin_amount = 0.25
 shader_parameter/pixel_filter = 740.0
 shader_parameter/is_rotating = false
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m8o6q"]
+shader = ExtResource("30_r71p6")
+shader_parameter/Smooth = true
+shader_parameter/width = 32.0
+shader_parameter/pixel_size = 2
+shader_parameter/width_speed = 3.0
+shader_parameter/green_active = false
+shader_parameter/half_red_active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkque"]
+shader = ExtResource("32_584c8")
+shader_parameter/godot_is_red = false
+shader_parameter/godot_is_blured = false
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_khgiu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sspok"]
+seamless = true
+as_normal_map = true
+bump_strength = 12.0
+noise = SubResource("FastNoiseLite_khgiu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jeuur"]
+shader = ExtResource("33_oi46a")
+shader_parameter/strength = 0.1
+shader_parameter/speed = 8.0
+shader_parameter/frames = 2
+shader_parameter/is_active = false
+shader_parameter/flowMap = SubResource("NoiseTexture2D_sspok")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ijny"]
 shader = ExtResource("32_bjjaq")
 shader_parameter/Smooth = true
@@ -301,7 +344,7 @@ shader = ExtResource("34_vwtt8")
 shader_parameter/iMouse = null
 shader_parameter/color_rect_size = Vector2(1280, 1280)
 shader_parameter/reveal_time = 1.0
-shader_parameter/active_mouse = null
+shader_parameter/active_mouse = false
 shader_parameter/changing_over_time = false
 shader_parameter/time_passed = 0.0
 
@@ -324,17 +367,35 @@ shader_parameter/line_thickness = 0.001
 shader_parameter/number_of_repetitions = 20
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fwbhe"]
-polygon = PackedVector2Array(-151, 131, -192, 231, -93, 298, -61, 252, -5, 189)
+polygon = PackedVector2Array(-24, -33, -42, 6, -10, 36, 36, 23, 35, -22)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3nx5r"]
+shader = ExtResource("40_kithv")
+shader_parameter/screen_size = null
+shader_parameter/mouse_position = null
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_cmxgc"]
+polygon = PackedVector2Array(-1, -51, -54, 1, -3, 68, 59, 3)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_juhet"]
+polygon = PackedVector2Array(-5, -59, -26, -51, -35, -43, -42, -34, -47, -22, -50, -8, -53, 7, -50, 27, -41, 39, -36, 42, -27, 44, -8, 49, 4, 50, 14, 50, 32, 47, 48, 33, 54, 13, 54, -8, 54, -27, 48, -47, 38, -57, 22, -61, 9, -61)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8etbf"]
+polygon = PackedVector2Array(41, 29, 87, -72, 125, 60)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w5n2e"]
+polygon = PackedVector2Array(-8, -28, -4, -59, 16, -24, 59, -17, 29, -3, 49, 41, 19, 18, -20, 47, -7, 11, -65, -1)
 
 [node name="Presentation" type="Node2D"]
 
-[node name="Presenter" type="Node" parent="." node_paths=PackedStringArray("player", "frame")]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c8oj4")
+
+[node name="Presenter" type="Node" parent="." node_paths=PackedStringArray("player", "frame", "buttons")]
 script = ExtResource("1_lm8r0")
 player = NodePath("../Player")
-frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9")]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1bayy")
+frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9"), NodePath("../Frame10")]
+buttons = [NodePath("../Player/Buttons/HBoxContainer/Button0"), NodePath("../Player/Buttons/HBoxContainer/Button1"), NodePath("../Player/Buttons/HBoxContainer/Button2"), NodePath("../Player/Buttons/HBoxContainer/Button3"), NodePath("../Player/Buttons/HBoxContainer/Button4"), NodePath("../Player/Buttons/HBoxContainer/Button5"), NodePath("../Player/Buttons/HBoxContainer/Button6")]
 
 [node name="Ground" type="StaticBody2D" parent="."]
 z_index = 1
@@ -346,11 +407,11 @@ position = Vector2(653, 665)
 mesh = SubResource("QuadMesh_8r0xo")
 
 [node name="GroundCollision" type="CollisionShape2D" parent="Ground"]
-position = Vector2(653, 657)
+position = Vector2(659.45, 663)
 shape = SubResource("RectangleShape2D_2p0xb")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("presenter")]
-z_index = 1
+z_index = 20
 position = Vector2(0, 613)
 script = ExtResource("1_jx5g5")
 presenter = NodePath("../Presenter")
@@ -361,6 +422,62 @@ texture = ExtResource("2_rtug0")
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_188vg")
+
+[node name="Buttons" type="Node2D" parent="Player"]
+position = Vector2(-600, 40)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player/Buttons"]
+offset_right = 199.0
+offset_bottom = 25.0
+
+[node name="Button0" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="Button1" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "1"
+
+[node name="Button2" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "2"
+
+[node name="Button3" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "3"
+
+[node name="Button4" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "4"
+
+[node name="Button5" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "5"
+
+[node name="Button6" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "6"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 324)
@@ -549,8 +666,20 @@ scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
 text = "- Was sind Shader?
-- Sprite Animationen
-- Schatten"
+- Sprite Animationen (Vertex Shader)
+- Visuelle Effekte (Fragment Shader)
+- Signed Distance Fields / Functions
+- Ray Marching
+- Schatten
+- Abschluss"
+
+[node name="Godot1" type="Sprite2D" parent="Overview"]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_ckm0n")
+position = Vector2(195, 303)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("10_xva2m")
+script = ExtResource("11_3lss4")
 
 [node name="Frame2" type="Node2D" parent="."]
 position = Vector2(4000, 0)
@@ -586,13 +715,12 @@ grow_vertical = 2
 scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
-text = "- Englisch \"to shade\"
-- Rendering-Effekte
-- Häufig 3D, heute 2D
-- Parallelisiert auf GPU
-- Schnell komplex
-- Aufteilung in:
+text = "- Rendering-Effekte
+- Typisch in 3D, hier 2D
+- Programme auf GPU
+- Teils komplex
 
+Aufteilung in:
 - Vertex Shader
 - Fragment Shader"
 
@@ -651,21 +779,21 @@ anchor_bottom = 0.5
 offset_left = -600.0
 offset_top = 100.0
 offset_right = 79760.0
-offset_bottom = 60133.0
+offset_bottom = 60850.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
-text = "Skript läuft auf CPU
-- Mächtiger
-- Serialisiert
-- Wenige Kerne
+text = "Skripte laufen auf CPU
+- Wenige mächtige Kerne
+- Serialisiert / Sequenziell
+- Viel Speicher
 
- Shader läuft auf GPU
-- Limitiert
+ Shader laufen auf GPU
+- Viele kleinere Kerne
 - Paralellisiert
-- Viele Kerne
+- Limitierter Speicher
 
 Kein Gedächtnis zwischen Frames
 Input nur limitiert über uniforms möglich"
@@ -714,7 +842,7 @@ anchor_bottom = 0.5
 offset_left = -600.0
 offset_top = 100.0
 offset_right = 79760.0
-offset_bottom = 60133.0
+offset_bottom = 65136.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.008, 0.008)
@@ -724,10 +852,19 @@ text = "Transformationen:
 - Position
 - Rotation
 - Skalierung
-- Andere"
+- Andere
+
+
+
+
+
+
+Transformation rein visuell!
+Spielzustand verändert sich nicht."
 
 [node name="Godot1" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_v74gj")
 position = Vector2(178, 252)
 scale = Vector2(0.4, 0.4)
@@ -735,6 +872,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot2" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_dours")
 position = Vector2(-64, 127)
 scale = Vector2(0.4, 0.4)
@@ -742,6 +880,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot3" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_mrfqv")
 position = Vector2(142, 91)
 scale = Vector2(0.4, 0.4)
@@ -749,6 +888,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot4" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_cm6q4")
 position = Vector2(-3, 266)
 scale = Vector2(0.4, 0.4)
@@ -756,6 +896,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot5" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_xjvjf")
 position = Vector2(47, 164)
 scale = Vector2(0.4, 0.4)
@@ -763,6 +904,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot6" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_e25h7")
 position = Vector2(329, 353)
 scale = Vector2(0.4, 0.4)
@@ -770,6 +912,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot7" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_hds1q")
 position = Vector2(401, 455)
 scale = Vector2(0.4, 0.4)
@@ -777,6 +920,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot8" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_bm8v0")
 position = Vector2(238, 466)
 scale = Vector2(0.4, 0.4)
@@ -784,6 +928,7 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot9" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_cughv")
 position = Vector2(405, 250)
 scale = Vector2(0.4, 0.4)
@@ -791,13 +936,15 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot10" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_dmis5")
-position = Vector2(-20, 470)
+position = Vector2(-79, 423)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_rtug0")
 
 [node name="Godot11" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_jqqj0")
 position = Vector2(83, 396)
 scale = Vector2(0.4, 0.4)
@@ -805,15 +952,17 @@ texture = ExtResource("2_rtug0")
 
 [node name="Godot12" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_fxpur")
-position = Vector2(-174, 344)
+position = Vector2(-246, 378)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_rtug0")
 
 [node name="Godot13" type="Sprite2D" parent="Frame4"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_yl41y")
-position = Vector2(-355, 431)
+position = Vector2(-477, 393)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_rtug0")
 
@@ -851,9 +1000,11 @@ grow_vertical = 2
 scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
-text = "- Endlose Möglichkeiten
-- Künstlerische Freiheit
-- Oft komplizierte Mathematik"
+text = "- Filter
+- Verzerrungseffekte
+- Effekte zum Hervorheben
+- Animationseffekte
+- Und vieles mehr ..."
 
 [node name="Effekt0" type="ColorRect" parent="Frame5"]
 material = SubResource("ShaderMaterial_ver5r")
@@ -881,35 +1032,57 @@ offset_bottom = 500.0
 
 [node name="Godot1" type="Sprite2D" parent="Frame5"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
-material = SubResource("ShaderMaterial_2ijny")
-position = Vector2(-550, 350)
+material = SubResource("ShaderMaterial_m8o6q")
+position = Vector2(-550, 400)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("33_ygtn6")
 
 [node name="Godot2" type="Sprite2D" parent="Frame5"]
-modulate = Color(0.8687, 0.706003, 0.832583, 1)
-material = SubResource("ShaderMaterial_j2dbx")
-position = Vector2(-400, 350)
+self_modulate = Color(1.2, 1.2, 1.2, 1)
+material = SubResource("ShaderMaterial_kkque")
+position = Vector2(-400, 400)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_rtug0")
 
 [node name="Godot3" type="Sprite2D" parent="Frame5"]
+material = SubResource("ShaderMaterial_jeuur")
+position = Vector2(-250, 400)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("33_ygtn6")
+
+[node name="Godot4" type="Sprite2D" parent="Frame5"]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_2ijny")
+position = Vector2(-550, 550)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("33_ygtn6")
+
+[node name="Godot5" type="Sprite2D" parent="Frame5"]
+modulate = Color(0.8687, 0.706003, 0.832583, 1)
+material = SubResource("ShaderMaterial_j2dbx")
+position = Vector2(-400, 550)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_rtug0")
+
+[node name="Godot6" type="Sprite2D" parent="Frame5"]
 modulate = Color(0.8687, 0.706003, 0.832583, 1)
 material = SubResource("ShaderMaterial_vgnoc")
-position = Vector2(-250, 350)
+position = Vector2(-250, 550)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_rtug0")
 
 [node name="Frame6" type="Node2D" parent="."]
 position = Vector2(12000, 0)
 
-[node name="Effekt0" type="ColorRect" parent="Frame6"]
+[node name="Effekt0" type="ColorRect" parent="Frame6" node_paths=PackedStringArray("presenter")]
 material = SubResource("ShaderMaterial_0nqom")
 offset_left = -640.0
 offset_top = -316.0
 offset_right = 640.0
 offset_bottom = 964.0
+mouse_filter = 2
 script = ExtResource("35_7rtub")
+presenter = NodePath("../../Presenter")
 
 [node name="FrameTitle" type="RichTextLabel" parent="Frame6"]
 offset_left = -600.0
@@ -919,7 +1092,7 @@ theme_override_fonts/normal_font = ExtResource("7_yb5up")
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 40
 bbcode_enabled = true
-text = "[color=#ffaa21][b]S[/b][/color]igned [color=#ffaa21][b]D[/b][/color]istance [color=#ffaa21][b]F[/b][/color]ield / [color=#ffaa21][b]F[/b][/color]unction"
+text = "[color=#ffaa21][b]S[/b][/color]igned [color=#ffaa21][b]D[/b][/color]istance [color=#ffaa21][b]F[/b][/color]unction / [color=#ffaa21][b]F[/b][/color]ield"
 scroll_active = false
 autowrap_mode = 0
 
@@ -1003,7 +1176,7 @@ grow_vertical = 2
 scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
-text = "(👍≖‿‿≖)👍Jetzt ihr! 👍(≖‿‿≖👍)"
+text = "(👍≖‿‿≖)👍Jetzt ihr! 👍(≖‿‿≖ 👍)"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -1015,29 +1188,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = 50.0
-offset_right = 300.0
-offset_bottom = 550.0
+offset_left = -350.0
+offset_right = 350.0
+offset_bottom = 520.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("9_rnjar")
 theme_override_font_sizes/font_size = 20
 text = "// Calculates signed distance to ???
-float sdSomething(vec2 p, vec2 a, vec2 b) {
+float sdSomething(vec2 p, vec2 a, vec2 l) {
+	vec2 b = vec2(a.x + l, a.y);
 	// case 1
-	if (p.x < a.x) {
+	if (p.x <= a.x) {
 		return distance(a, p);
 	}
 	// case 2
 	if (p.x > a.x && p.x < b.x) {
-		return abs(p.y - a.y) 				// abs = Betrag
+		return abs(p.y - a.y); 	// abs = Betrag
 	}
 	// case 3
-	if (p.x > b.x) {
+	if (p.x >= b.x) {
 		return distance(b, p);
 	}
 }"
+editable = false
 
 [node name="Effekt0" type="ColorRect" parent="Frame7"]
 material = SubResource("ShaderMaterial_62pkq")
@@ -1081,13 +1255,52 @@ offset_right = 392.0
 offset_bottom = 390.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Frame9"]
-position = Vector2(-53, 224)
+position = Vector2(-206, 485)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame9"]
-position = Vector2(-307, 5)
+position = Vector2(-460, 266)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
 [node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame9"]
-position = Vector2(17, -103)
+position = Vector2(-136, 158)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
+
+[node name="Frame10" type="Node2D" parent="."]
+position = Vector2(20000, 0)
+
+[node name="FrameTitle" type="RichTextLabel" parent="Frame10"]
+offset_left = -600.0
+offset_right = 200.0
+offset_bottom = 100.0
+theme_override_fonts/normal_font = ExtResource("7_yb5up")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "Hard Shadows"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ColorRect" type="ColorRect" parent="Frame10"]
+material = SubResource("ShaderMaterial_3nx5r")
+offset_left = -670.0
+offset_top = -370.0
+offset_right = 710.0
+offset_bottom = 1010.0
+script = ExtResource("41_fn4c0")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(-205, 395)
+occluder = SubResource("OccluderPolygon2D_cmxgc")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(326, 235)
+occluder = SubResource("OccluderPolygon2D_juhet")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(-115, 216)
+occluder = SubResource("OccluderPolygon2D_8etbf")
+
+[node name="LightOccluder2D4" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(209, 480)
+occluder = SubResource("OccluderPolygon2D_w5n2e")

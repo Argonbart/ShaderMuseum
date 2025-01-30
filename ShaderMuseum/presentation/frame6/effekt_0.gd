@@ -1,5 +1,6 @@
 extends ColorRect
 
+@export var presenter: Node
 @export var animation_duration: float = 2.0 # Total time for the animation
 var elapsed_time: float = 0.0
 var animating: bool = false
@@ -20,7 +21,7 @@ func _process(delta):
 	#if Input.is_action_just_pressed("animate"):
 		#animate()
 	
-	if Input.is_action_just_pressed("click"):
+	if presenter.current_frame == 6 && Input.is_action_just_pressed("click"):
 		material.set_shader_parameter("active_mouse", !material.get_shader_parameter("active_mouse"))
 	
 	if animating:

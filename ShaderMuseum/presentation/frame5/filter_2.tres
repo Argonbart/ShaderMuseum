@@ -1,0 +1,35 @@
+[gd_resource type="Shader" format=3 uid="uid://j3xan7orcykc"]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform bool godot_is_red = false;
+uniform bool godot_is_blured = false;
+
+void fragment() {
+	
+	if (godot_is_red && COLOR.b > 0.3 && COLOR.r < 0.1) {
+		COLOR = vec4(1.0, 0.0, 0.0, 1.0);
+	}
+	
+	if (godot_is_blured) {
+		vec3 col = texture(TEXTURE, UV).xyz * 0.16;
+	    col += texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.075;
+	    col += texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.075;
+	    col += texture(TEXTURE, UV + vec2(2.0 * TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.06;
+	    col += texture(TEXTURE, UV + vec2(2.0 * -TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.06;
+	    col += texture(TEXTURE, UV + vec2(3.0 * TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.045;
+	    col += texture(TEXTURE, UV + vec2(3.0 * -TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.045;
+	    col += texture(TEXTURE, UV + vec2(4.0 * TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.025;
+	    col += texture(TEXTURE, UV + vec2(4.0 * -TEXTURE_PIXEL_SIZE.x, 0.0)).xyz * 0.025;
+		col += texture(TEXTURE, UV + vec2(0.0, TEXTURE_PIXEL_SIZE.y)).xyz * 0.075;
+	    col += texture(TEXTURE, UV + vec2(0.0, -TEXTURE_PIXEL_SIZE.y)).xyz * 0.075;
+	    col += texture(TEXTURE, UV + vec2(0.0, 2.0 * TEXTURE_PIXEL_SIZE.y)).xyz * 0.06;
+	    col += texture(TEXTURE, UV + vec2(0.0, 2.0 * -TEXTURE_PIXEL_SIZE.y)).xyz * 0.06;
+	    col += texture(TEXTURE, UV + vec2(0.0, 3.0 * TEXTURE_PIXEL_SIZE.y)).xyz * 0.045;
+	    col += texture(TEXTURE, UV + vec2(0.0, 3.0 * -TEXTURE_PIXEL_SIZE.y)).xyz * 0.045;
+	    col += texture(TEXTURE, UV + vec2(0.0, 4.0 * TEXTURE_PIXEL_SIZE.y)).xyz * 0.025;
+	    col += texture(TEXTURE, UV + vec2(0.0, 4.0 * -TEXTURE_PIXEL_SIZE.y)).xyz * 0.025;
+	    COLOR.xyz = col * 1.2;
+	}
+}"
