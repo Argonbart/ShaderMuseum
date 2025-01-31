@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=99 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
@@ -49,6 +49,10 @@
 [ext_resource type="Script" path="res://presentation/frame10/hard_shadows/color_rect.gd" id="41_fn4c0"]
 [ext_resource type="SpriteFrames" uid="uid://cgn0qcfxci775" path="res://presentation/sprites/circle_sdf.gif" id="42_q3wm7"]
 [ext_resource type="Texture2D" uid="uid://716hfylu1fgu" path="res://presentation/sprites/big_sdf_list.png" id="43_l6ndi"]
+[ext_resource type="Shader" uid="uid://dis6r1wb8y2ar" path="res://presentation/frame8/frame_8_sdf.tres" id="46_an0n2"]
+[ext_resource type="Script" path="res://presentation/frame8/frame_8_effekt_script.gd" id="47_nexit"]
+[ext_resource type="Script" path="res://presentation/frame8/frame_8_effekt1_script.gd" id="48_34m2o"]
+[ext_resource type="Shader" uid="uid://v30xvlhjbb2p" path="res://presentation/frame8/frame_8_sdf_step_by_step_illustration.tres" id="48_pkhrm"]
 
 [sub_resource type="Environment" id="Environment_c8oj4"]
 background_mode = 3
@@ -359,6 +363,25 @@ shader_parameter/point_a = null
 shader_parameter/point_b = null
 shader_parameter/factor = null
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_awxq3"]
+shader = ExtResource("46_an0n2")
+shader_parameter/active_mouse = false
+shader_parameter/screen_size = null
+shader_parameter/mouse_position = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpwsp"]
+shader = ExtResource("48_pkhrm")
+shader_parameter/screen_size = null
+shader_parameter/mouse_position = null
+shader_parameter/pointA = null
+shader_parameter/pointB = null
+shader_parameter/connect_points = false
+shader_parameter/connect_first_circle = false
+shader_parameter/connect_second_circle = false
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fwbhe"]
+polygon = PackedVector2Array(-24, -33, -42, 6, -10, 36, 36, 23, 35, -22)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idrkd"]
 shader = ExtResource("36_xqyhy")
 shader_parameter/active_mouse = false
@@ -368,9 +391,6 @@ shader_parameter/screen_size = null
 shader_parameter/circle_line_thickness = 0.5
 shader_parameter/line_thickness = 0.001
 shader_parameter/number_of_repetitions = 20
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fwbhe"]
-polygon = PackedVector2Array(-24, -33, -42, 6, -10, 36, 36, 23, 35, -22)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3nx5r"]
 shader = ExtResource("40_kithv")
@@ -397,7 +417,7 @@ environment = SubResource("Environment_c8oj4")
 [node name="Presenter" type="Node" parent="." node_paths=PackedStringArray("player", "frame", "buttons")]
 script = ExtResource("1_lm8r0")
 player = NodePath("../Player")
-frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9"), NodePath("../Frame10")]
+frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9"), NodePath("../Frame11")]
 buttons = [NodePath("../Player/Buttons/HBoxContainer/Button0"), NodePath("../Player/Buttons/HBoxContainer/Button1"), NodePath("../Player/Buttons/HBoxContainer/Button2"), NodePath("../Player/Buttons/HBoxContainer/Button3"), NodePath("../Player/Buttons/HBoxContainer/Button4"), NodePath("../Player/Buttons/HBoxContainer/Button5"), NodePath("../Player/Buttons/HBoxContainer/Button6"), NodePath("../Player/Buttons/HBoxContainer/Button7"), NodePath("../Player/Buttons/HBoxContainer/Button8"), NodePath("../Player/Buttons/HBoxContainer/Button9"), NodePath("../Player/Buttons/HBoxContainer/Button10")]
 
 [node name="Ground" type="StaticBody2D" parent="."]
@@ -1262,6 +1282,7 @@ offset_left = -640.0
 offset_top = -316.0
 offset_right = 640.0
 offset_bottom = 964.0
+mouse_filter = 2
 script = ExtResource("37_p68yi")
 
 [node name="Frame8" type="Node2D" parent="."]
@@ -1278,6 +1299,78 @@ bbcode_enabled = true
 text = "Ray marching"
 scroll_active = false
 autowrap_mode = 0
+
+[node name="Text" type="Label" parent="Frame8"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 100.0
+offset_right = 101500.0
+offset_bottom = 65136.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.008, 0.008)
+theme_override_fonts/font = ExtResource("8_pgxwn")
+theme_override_font_sizes/font_size = 4000
+text = "- Algorithmus um Kollisionen zu erkennen
+- Basiert auf einem SDF
+- Bewegung entlang des Rays
+- Bis SDF Abstand klein = Kollision
+- Wenn Ziel vorher erreicht = Keine Kollision
+- Ansonsten bewegen und neuen Kreis kontrollieren
+- Code:"
+
+[node name="Effekt0" type="ColorRect" parent="Frame8" node_paths=PackedStringArray("presenter")]
+material = SubResource("ShaderMaterial_awxq3")
+offset_left = -670.0
+offset_top = -370.0
+offset_right = 710.0
+offset_bottom = 1010.0
+mouse_filter = 2
+script = ExtResource("47_nexit")
+presenter = NodePath("../../Presenter")
+
+[node name="Effekt1" type="ColorRect" parent="Frame8" node_paths=PackedStringArray("presenter", "markerA", "markerB")]
+material = SubResource("ShaderMaterial_dpwsp")
+offset_left = -670.0
+offset_top = -370.0
+offset_right = 710.0
+offset_bottom = 1010.0
+mouse_filter = 2
+script = ExtResource("48_34m2o")
+presenter = NodePath("../../Presenter")
+markerA = NodePath("../LightA")
+markerB = NodePath("../LightB")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Frame8"]
+z_index = 10
+position = Vector2(383, 457)
+occluder = SubResource("OccluderPolygon2D_fwbhe")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame8"]
+z_index = 10
+position = Vector2(-25, 409)
+occluder = SubResource("OccluderPolygon2D_fwbhe")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame8"]
+z_index = 10
+position = Vector2(280, 262)
+occluder = SubResource("OccluderPolygon2D_fwbhe")
+
+[node name="LightA" type="ColorRect" parent="Frame8"]
+offset_left = 131.0
+offset_top = 472.0
+offset_right = 171.0
+offset_bottom = 512.0
+
+[node name="LightB" type="ColorRect" parent="Frame8"]
+offset_left = 482.0
+offset_top = 227.0
+offset_right = 522.0
+offset_bottom = 267.0
 
 [node name="Frame9" type="Node2D" parent="."]
 position = Vector2(18000, 0)
@@ -1314,6 +1407,42 @@ z_index = 10
 position = Vector2(-136, 158)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
+[node name="Code" type="CodeEdit" parent="Frame9"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 172.0
+offset_top = -36.0
+offset_right = 2072.0
+offset_bottom = 1114.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+theme_override_fonts/font = ExtResource("9_rnjar")
+theme_override_font_sizes/font_size = 40
+text = "vec2 at = screen_uv_to_sdf(light_position);
+float accum = 0.0;
+while (accum < light_to_uv_distance) {
+	float d = texture_sdf(at);
+	if (accum == 0.0 && d < 0.01) {		// inside occluder
+		output_color = blue_color;
+		break;
+	}
+	if (d < 0.01) {						// occluder in the way
+		output_color = black_color;
+		break;
+	}
+	accum += d;							// move d units along the ray
+	at += d * light_to_uv_dir;
+}
+if (accum >= light_to_uv_distance) {		// no occluder
+	output_color = white_color;
+}
+COLOR = output_color;"
+editable = false
+
 [node name="Frame10" type="Node2D" parent="."]
 position = Vector2(20000, 0)
 
@@ -1325,30 +1454,65 @@ theme_override_fonts/normal_font = ExtResource("7_yb5up")
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 40
 bbcode_enabled = true
+text = "Shadows"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Text" type="Label" parent="Frame10"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 100.0
+offset_right = 101500.0
+offset_bottom = 65136.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.008, 0.008)
+theme_override_fonts/font = ExtResource("8_pgxwn")
+theme_override_font_sizes/font_size = 4000
+text = "- Bullet 1
+- Bullet 2
+- Bullet 3"
+
+[node name="Frame11" type="Node2D" parent="."]
+position = Vector2(22000, 0)
+
+[node name="FrameTitle" type="RichTextLabel" parent="Frame11"]
+offset_left = -600.0
+offset_right = 200.0
+offset_bottom = 100.0
+theme_override_fonts/normal_font = ExtResource("7_yb5up")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
 text = "Hard Shadows"
 scroll_active = false
 autowrap_mode = 0
 
-[node name="ColorRect" type="ColorRect" parent="Frame10"]
+[node name="ColorRect" type="ColorRect" parent="Frame11"]
 material = SubResource("ShaderMaterial_3nx5r")
 offset_left = -670.0
 offset_top = -370.0
 offset_right = 710.0
 offset_bottom = 1010.0
+mouse_filter = 2
 script = ExtResource("41_fn4c0")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Frame10"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Frame11"]
 position = Vector2(-205, 395)
 occluder = SubResource("OccluderPolygon2D_cmxgc")
 
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame10"]
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame11"]
 position = Vector2(326, 235)
 occluder = SubResource("OccluderPolygon2D_juhet")
 
-[node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame10"]
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame11"]
 position = Vector2(-115, 216)
 occluder = SubResource("OccluderPolygon2D_8etbf")
 
-[node name="LightOccluder2D4" type="LightOccluder2D" parent="Frame10"]
+[node name="LightOccluder2D4" type="LightOccluder2D" parent="Frame11"]
 position = Vector2(209, 480)
 occluder = SubResource("OccluderPolygon2D_w5n2e")

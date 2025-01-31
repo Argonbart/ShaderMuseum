@@ -89,8 +89,16 @@ var steps_to_frame_dict: Dictionary = {
 	68 : 7,
 
 	69 : 8,
-	70 : 9,
-	71 : 10,
+	70 : 8,
+	71 : 8,
+	72 : 8,
+	73 : 8,
+	74 : 8,
+	75 : 8,
+	76 : 8,
+	
+	77 : 9,
+	78 : 10,
 }
 
 var button_to_frame_dict: Dictionary =  {
@@ -101,10 +109,10 @@ var button_to_frame_dict: Dictionary =  {
 	4 : 30,
 	5 : 37,
 	6 : 56,
-	7 : 65,
+	7 : 66,
 	8 : 69,
-	9 : 70,
-	10 : 71,
+	9 : 77,
+	10 : 78,
 }
 
 func _ready() -> void:
@@ -522,16 +530,71 @@ func execute_step():
 
 		69:
 			# frame 8
-			pass
+			frame[current_frame].get_node("Text").text = ""
+			frame[current_frame].get_node("Effekt0").visible = false
+			frame[current_frame].get_node("Effekt1").visible = false
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_points", false)
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_first_circle", false)
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_second_circle", false)
+			frame[current_frame].get_node("Effekt1").is_colliding = true
+			frame[current_frame].get_node("Effekt1").is_last_bullet_point = false
+			frame[current_frame].get_node("LightA").visible = false
+			frame[current_frame].get_node("LightB").visible = false
+		70:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen"
+			frame[current_frame].get_node("Effekt0").visible = false
+		71:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF"
+			frame[current_frame].get_node("Effekt0").visible = true
+			frame[current_frame].get_node("Effekt1").visible = false
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_points", false)
+			frame[current_frame].get_node("LightA").visible = false
+			frame[current_frame].get_node("LightB").visible = false
+		72:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF\n- Bewegung entlang des Rays"
+			frame[current_frame].get_node("Effekt0").visible = false
+			frame[current_frame].get_node("Effekt1").visible = true
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_points", true)
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_first_circle", false)
+			frame[current_frame].get_node("LightA").visible = true
+			frame[current_frame].get_node("LightB").visible = true
+		73:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF\n- Bewegung entlang des Rays\n- Bis SDF Abstand klein = Kollision"
+			frame[current_frame].get_node("Effekt1").is_colliding = true
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_first_circle", true)
+		74:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF\n- Bewegung entlang des Rays\n- Bis SDF Abstand klein = Kollision\n- Wenn Ziel vorher erreicht = Keine Kollision"
+			frame[current_frame].get_node("Effekt1").is_colliding = false
+			frame[current_frame].get_node("Effekt1").is_last_bullet_point = false
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_second_circle", false)
+		75:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF\n- Bewegung entlang des Rays\n- Bis SDF Abstand klein = Kollision\n- Wenn Ziel vorher erreicht = Keine Kollision\n- Ansonsten bewegen und neuen Kreis kontrollieren"
+			frame[current_frame].get_node("Effekt1").is_last_bullet_point = true
+			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_second_circle", true)
+		76:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF\n- Bewegung entlang des Rays\n- Bis SDF Abstand klein = Kollision\n- Wenn Ziel vorher erreicht = Keine Kollision\n- Ansonsten bewegen und neuen Kreis kontrollieren\n- Code:"
 
 		## ---------------------------------- FRAME 9 ----------------------------------------------##
 
-		70:
+		77:
 			# frame 9
-			pass
+			pass ## Explain the algorithm with code and illustration
 
 		## ---------------------------------- FRAME 10 ----------------------------------------------##
 
-		71:
+		78:
 			# frame 10
+			pass
+
+		## ---------------------------------- FRAME 11 ----------------------------------------------##
+
+		79:
+			# frame 11
 			pass

@@ -1,0 +1,94 @@
+[gd_resource type="Shader" format=3 uid="uid://v30xvlhjbb2p"]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform vec2 screen_size;
+uniform vec2 mouse_position;
+uniform vec2 pointA;
+uniform vec2 pointB;
+
+uniform bool connect_points = false;
+uniform bool connect_first_circle = false;
+uniform bool connect_second_circle = false;
+
+float sdCircle(vec2 p, float r) {
+    return length(p) - r;
+}
+
+void fragment() {
+
+	float circle_line_thickness = 2.0;
+
+	vec4 gray = vec4(0.5, 0.5, 0.5, 1.0);
+	vec4 black = vec4(0.0, 0.0, 0.0, 0.0);
+	vec4 blue = vec4(0.0, 0.0, 1.0, 1.0);
+	vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
+
+	// screen stuff
+	vec2 screen_uv = (SCREEN_UV * screen_size) / 1.5;
+	vec2 mouse = mouse_position / 1.5;
+	vec2 a = pointA / 1.5;
+	vec2 b = pointB / 1.5;
+	vec4 output_color = black;
+	
+	// illustration stuff
+	vec2 a_to_b_vector = b - a;
+	vec2 a_to_b_dir = normalize(a_to_b_vector);
+	
+	// Calculate closest point on line segment AB to UV
+	vec2 a_to_b = a_to_b_vector; 														// Vector from A to B (along the line)
+	vec2 a_to_uv = screen_uv - a;													// Vector from A to UV (to the line)
+    float a_to_uv_length_squared = dot(a_to_b, a_to_b);									// ?
+	float s_uv = dot(a_to_uv, a_to_b);													// ?
+    float t_uv = clamp(s_uv / a_to_uv_length_squared, 0.0, 1.0);						// Projection factor
+    vec2 closest_point_on_line_to_uv = a + t_uv * a_to_b;							// Closest point on the line to UV
+	
+	if (connect_points && screen_uv.x > closest_point_on_line_to_uv.x - 2.0 && screen_uv.x < closest_point_on_line_to_uv.x + 2.0 && screen_uv.y > closest_point_on_line_to_uv.y - 2.0 && screen_uv.y < closest_point_on_line_to_uv.y + 2.0) {
+		output_color = gray;
+	}
+	
+	float distance_from_uv_to_next_object = texture_sdf(screen_uv_to_sdf(SCREEN_UV));
+	
+	vec2 point_A_to_uv_vector = screen_uv - a;
+	float distance_to_next_object = texture_sdf(screen_uv_to_sdf(pointA / screen_size));
+	float distance_to_point_A_circle = sdCircle(point_A_to_uv_vector, distance_to_next_object);
+	
+	if (connect_first_circle && distance_to_point_A_circle > -1.0 * circle_line_thickness && distance_to_point_A_circle < circle_line_thickness) {
+		output_color = red;
+	}
+	
+	vec2 a2 = a + distance_to_next_object * a_to_b_dir;
+	vec2 point_a2 = a2 * 1.5;
+	vec2 point_A2_to_uv_vector = screen_uv - a2;
+	float distance_to_next_next_object = texture_sdf(screen_uv_to_sdf(point_a2 / screen_size));
+	float distance_to_point_A2_circle = sdCircle(point_A2_to_uv_vector, distance_to_next_next_object);
+	
+	if (connect_second_circle && distance_to_point_A2_circle > -1.0 * circle_line_thickness && distance_to_point_A2_circle < circle_line_thickness) {
+		output_color = red;
+	}
+	
+	//vec2 mouse_to_uv_vector = screen_uv - mouse;
+	//float distance_from_uv_to_next_object = texture_sdf(screen_uv_to_sdf(SCREEN_UV));
+	//float distance_to_next_object = texture_sdf(screen_uv_to_sdf(mouse_position / screen_size));
+	//float distance_to_mouse_circle = sdCircle(mouse_to_uv_vector, distance_to_next_object);
+	//
+	//if (distance_from_uv_to_next_object < 0.01) {
+		//output_color = blue;
+	//}
+	//
+	//if (active_mouse && distance_to_mouse_circle > -1.0 * circle_line_thickness && distance_to_mouse_circle < circle_line_thickness) {
+		//output_color = red;
+	//}
+	
+	if (distance_from_uv_to_next_object < 0.01) {
+		output_color = blue;
+	}
+	
+	if (distance_from_uv_to_next_object < 0.01) {
+		COLOR = blue;
+	} else {
+		COLOR = output_color;
+	}
+}
+"
