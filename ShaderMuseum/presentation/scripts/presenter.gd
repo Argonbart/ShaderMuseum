@@ -404,6 +404,7 @@ func execute_step():
 			frame[current_frame].get_node("Godot1").material.set_shader_parameter("half_red_active", false)
 			frame[current_frame].get_node("Godot2").material.set_shader_parameter("godot_is_blured", false)
 			frame[current_frame].get_node("Godot3").material.set_shader_parameter("is_active", false)
+			frame[current_frame].get_node("Gifs").visible = false
 		38:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Filter"
@@ -454,18 +455,20 @@ func execute_step():
 			# turn godot 6 on
 			frame[current_frame].get_node("Godot6").visible = true
 		52:
-			# bullet point
-			frame[current_frame].get_node("Text").text = "- Filter\n- Verzerrungseffekte\n- Effekte zum Hervorheben\n- Animationseffekte\n- Und vieles mehr ..."
-		53:
 			# turn on big effect
+			frame[current_frame].get_node("Text").text = "- Filter\n- Verzerrungseffekte\n- Effekte zum Hervorheben\n- Animationseffekte\n- Und vieles mehr ..."
 			frame[current_frame].get_node("Effekt0").visible = true
 			frame[current_frame].get_node("Effekt1").visible = true
-		54:
+		53:
 			# turn on big effect
 			frame[current_frame].get_node("Effekt2").visible = true
-		55:
+		54:
 			# turn on big effect
 			frame[current_frame].get_node("Effekt3").visible = true
+			frame[current_frame].get_node("Gifs").visible = false
+		55:
+			# turn on gifs
+			frame[current_frame].get_node("Gifs").visible = true
 
 		## ---------------------------------- FRAME 6 ----------------------------------------------##
 
