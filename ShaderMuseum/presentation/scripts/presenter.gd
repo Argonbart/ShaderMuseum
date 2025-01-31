@@ -98,7 +98,19 @@ var steps_to_frame_dict: Dictionary = {
 	76 : 8,
 	
 	77 : 9,
+
 	78 : 10,
+
+	79 : 11,
+	80 : 11,
+	81 : 11,
+	82 : 11,
+	83 : 11,
+
+	84 : 12,
+	85 : 12,
+	86 : 12,
+	87 : 12,
 }
 
 var button_to_frame_dict: Dictionary =  {
@@ -113,6 +125,8 @@ var button_to_frame_dict: Dictionary =  {
 	8 : 69,
 	9 : 77,
 	10 : 78,
+	11 : 79,
+	12 : 84,
 }
 
 func _ready() -> void:
@@ -531,7 +545,7 @@ func execute_step():
 		69:
 			# frame 8
 			frame[current_frame].get_node("Text").text = ""
-			frame[current_frame].get_node("Effekt0").visible = false
+			frame[current_frame].get_node("Effekt0").visible = true
 			frame[current_frame].get_node("Effekt1").visible = false
 			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_points", false)
 			frame[current_frame].get_node("Effekt1").material.set_shader_parameter("connect_first_circle", false)
@@ -543,7 +557,7 @@ func execute_step():
 		70:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen"
-			frame[current_frame].get_node("Effekt0").visible = false
+			frame[current_frame].get_node("Effekt0").visible = true
 		71:
 			# bullet point
 			frame[current_frame].get_node("Text").text = "- Algorithmus um Kollisionen zu erkennen\n- Basiert auf einem SDF"
@@ -591,10 +605,47 @@ func execute_step():
 
 		78:
 			# frame 10
-			pass
+			pass ## Explain hard shadows are ez (with illustration)
 
 		## ---------------------------------- FRAME 11 ----------------------------------------------##
 
 		79:
 			# frame 11
-			pass
+			frame[current_frame].get_node("Text").text = ""
+			frame[current_frame].get_node("LightMapImages").visible = false
+			frame[current_frame].get_node("HardShadows").visible = false
+			frame[current_frame].get_node("SoftShadows").visible = false
+			frame[current_frame].get_node("GlobalIllumination").visible = false
+		80:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Maske (Lightmap)"
+			frame[current_frame].get_node("LightMapImages").visible = true
+		81:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Maske (Lightmap)\n- Hard Shadows"
+			frame[current_frame].get_node("HardShadows").visible = true
+		82:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Maske (Lightmap)\n- Hard Shadows\n- Soft Shadows"
+			frame[current_frame].get_node("SoftShadows").visible = true
+		83:
+			# bullet point
+			frame[current_frame].get_node("Text").text = "- Maske (Lightmap)\n- Hard Shadows\n- Soft Shadows\n- Global Illumination"
+			frame[current_frame].get_node("GlobalIllumination").visible = true
+
+		## ---------------------------------- FRAME 12 ----------------------------------------------##
+
+		84:
+			# frame 12
+			frame[current_frame].get_node("Text").text = ""
+		85:
+			# frame 12
+			frame[current_frame].get_node("Text").text = "- Shader sind vielseitig und mächtig"
+		86:
+			# frame 12
+			frame[current_frame].get_node("Text").text = "- Shader sind vielseitig und mächtig\n- Mathematik ist schwer"
+		87:
+			# frame 12
+			frame[current_frame].get_node("Text").text = "- Shader sind vielseitig und mächtig\n- Mathematik ist schwer\n- Shader sind Magie"
+
+		## ---------------------------------- LOOPING ----------------------------------------------##

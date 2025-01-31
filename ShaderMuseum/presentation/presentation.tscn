@@ -1,10 +1,12 @@
-[gd_scene load_steps=99 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=111 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
 [ext_resource type="Texture2D" uid="uid://bwunbth5lds86" path="res://presentation/sprites/icon.svg" id="2_rtug0"]
 [ext_resource type="Script" path="res://presentation/scripts/camera.gd" id="3_xl8s0"]
 [ext_resource type="Material" uid="uid://dlpyf1awwppwg" path="res://presentation/title/label1_material.tres" id="4_h3db0"]
+[ext_resource type="Texture2D" uid="uid://bjpwdbghnotw6" path="res://presentation/sprites/final_speech_bubble/default.png" id="4_m0d7q"]
+[ext_resource type="Script" path="res://presentation/overview/questions.gd" id="4_rqdq0"]
 [ext_resource type="Texture2D" uid="uid://dsulqpbnp7mop" path="res://presentation/sprites/seamless-wavy-line-pattern-png.webp" id="5_4f437"]
 [ext_resource type="Shader" path="res://presentation/frame2/frame2_shader.gdshader" id="6_jupxd"]
 [ext_resource type="FontFile" uid="uid://b1ytffl6n528u" path="res://fonts/Besty Beige.ttf" id="7_yb5up"]
@@ -53,6 +55,15 @@
 [ext_resource type="Script" path="res://presentation/frame8/frame_8_effekt_script.gd" id="47_nexit"]
 [ext_resource type="Script" path="res://presentation/frame8/frame_8_effekt1_script.gd" id="48_34m2o"]
 [ext_resource type="Shader" uid="uid://v30xvlhjbb2p" path="res://presentation/frame8/frame_8_sdf_step_by_step_illustration.tres" id="48_pkhrm"]
+[ext_resource type="Texture2D" uid="uid://x68sjtuvc44f" path="res://presentation/sprites/lightmap-2d-a.png" id="54_nbrrf"]
+[ext_resource type="Texture2D" uid="uid://8iw5uu3wxflx" path="res://presentation/sprites/plus-icon.png" id="55_58w7u"]
+[ext_resource type="Texture2D" uid="uid://cya2nj6d3hbk1" path="res://presentation/sprites/lightmap-2d-b.png" id="56_eihju"]
+[ext_resource type="Texture2D" uid="uid://c6dllycenk4ht" path="res://presentation/sprites/equals_icon.png" id="57_t7cy4"]
+[ext_resource type="Texture2D" uid="uid://dexg2jqbb886d" path="res://presentation/sprites/lightmap-2d-c.png" id="58_x78xc"]
+[ext_resource type="Texture2D" uid="uid://c8byqc6um5ysn" path="res://presentation/sprites/hard_shadows.png" id="59_atmhp"]
+[ext_resource type="Texture2D" uid="uid://dm3mkt7qn0e7w" path="res://presentation/sprites/umbra.png" id="60_5nm7v"]
+[ext_resource type="Texture2D" uid="uid://c8ijnpcmticd8" path="res://presentation/sprites/soft_shadows.png" id="61_gmd6n"]
+[ext_resource type="Texture2D" uid="uid://crjpgpcyergi0" path="res://presentation/sprites/hard_shadowsglobal_illum.png" id="62_p5ggf"]
 
 [sub_resource type="Environment" id="Environment_c8oj4"]
 background_mode = 3
@@ -70,6 +81,8 @@ size = Vector2(2000, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_188vg"]
 size = Vector2(64, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xe21q"]
 
 [sub_resource type="Shader" id="Shader_5bao2"]
 code = "shader_type canvas_item;
@@ -396,6 +409,7 @@ shader_parameter/number_of_repetitions = 20
 shader = ExtResource("40_kithv")
 shader_parameter/screen_size = null
 shader_parameter/mouse_position = null
+shader_parameter/active_mouse = false
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_cmxgc"]
 polygon = PackedVector2Array(-1, -51, -54, 1, -3, 68, 59, 3)
@@ -417,8 +431,8 @@ environment = SubResource("Environment_c8oj4")
 [node name="Presenter" type="Node" parent="." node_paths=PackedStringArray("player", "frame", "buttons")]
 script = ExtResource("1_lm8r0")
 player = NodePath("../Player")
-frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9"), NodePath("../Frame11")]
-buttons = [NodePath("../Player/Buttons/HBoxContainer/Button0"), NodePath("../Player/Buttons/HBoxContainer/Button1"), NodePath("../Player/Buttons/HBoxContainer/Button2"), NodePath("../Player/Buttons/HBoxContainer/Button3"), NodePath("../Player/Buttons/HBoxContainer/Button4"), NodePath("../Player/Buttons/HBoxContainer/Button5"), NodePath("../Player/Buttons/HBoxContainer/Button6"), NodePath("../Player/Buttons/HBoxContainer/Button7"), NodePath("../Player/Buttons/HBoxContainer/Button8"), NodePath("../Player/Buttons/HBoxContainer/Button9"), NodePath("../Player/Buttons/HBoxContainer/Button10")]
+frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9"), NodePath("../Frame10"), NodePath("../Frame11"), NodePath("../Frame12")]
+buttons = [NodePath("../Player/Buttons/HBoxContainer/Button0"), NodePath("../Player/Buttons/HBoxContainer/Button1"), NodePath("../Player/Buttons/HBoxContainer/Button2"), NodePath("../Player/Buttons/HBoxContainer/Button3"), NodePath("../Player/Buttons/HBoxContainer/Button4"), NodePath("../Player/Buttons/HBoxContainer/Button5"), NodePath("../Player/Buttons/HBoxContainer/Button6"), NodePath("../Player/Buttons/HBoxContainer/Button7"), NodePath("../Player/Buttons/HBoxContainer/Button8"), NodePath("../Player/Buttons/HBoxContainer/Button9"), NodePath("../Player/Buttons/HBoxContainer/Button10"), NodePath("../Player/Buttons/HBoxContainer/Button11"), NodePath("../Player/Buttons/HBoxContainer/Button12")]
 
 [node name="Ground" type="StaticBody2D" parent="."]
 z_index = 1
@@ -529,6 +543,43 @@ layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 10
 text = "10"
+
+[node name="Button11" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "11"
+
+[node name="Button12" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "12
+"
+
+[node name="Questions" type="Node2D" parent="Player" node_paths=PackedStringArray("presenter")]
+visible = false
+script = ExtResource("4_rqdq0")
+presenter = NodePath("../../Presenter")
+
+[node name="Bubble" type="Sprite2D" parent="Player/Questions"]
+material = SubResource("ShaderMaterial_xe21q")
+position = Vector2(149, -218)
+scale = Vector2(2.385, 2.385)
+texture = ExtResource("4_m0d7q")
+
+[node name="Frage" type="RichTextLabel" parent="Player/Questions"]
+offset_left = -79.0
+offset_top = -251.0
+offset_right = 386.0
+offset_bottom = -193.0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "Haben Sie noch Fragen?"
+fit_content = true
+scroll_active = false
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 324)
@@ -1446,7 +1497,34 @@ editable = false
 [node name="Frame10" type="Node2D" parent="."]
 position = Vector2(20000, 0)
 
+[node name="ColorRect" type="ColorRect" parent="Frame10" node_paths=PackedStringArray("presenter")]
+material = SubResource("ShaderMaterial_3nx5r")
+offset_left = -670.0
+offset_top = -370.0
+offset_right = 710.0
+offset_bottom = 1010.0
+mouse_filter = 2
+script = ExtResource("41_fn4c0")
+presenter = NodePath("../../Presenter")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(-205, 395)
+occluder = SubResource("OccluderPolygon2D_cmxgc")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(326, 235)
+occluder = SubResource("OccluderPolygon2D_juhet")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(-115, 216)
+occluder = SubResource("OccluderPolygon2D_8etbf")
+
+[node name="LightOccluder2D4" type="LightOccluder2D" parent="Frame10"]
+position = Vector2(209, 480)
+occluder = SubResource("OccluderPolygon2D_w5n2e")
+
 [node name="FrameTitle" type="RichTextLabel" parent="Frame10"]
+modulate = Color(0, 0, 0, 1)
 offset_left = -600.0
 offset_right = 200.0
 offset_bottom = 100.0
@@ -1458,7 +1536,22 @@ text = "Shadows"
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Text" type="Label" parent="Frame10"]
+[node name="Frame11" type="Node2D" parent="."]
+position = Vector2(22000, 0)
+
+[node name="FrameTitle" type="RichTextLabel" parent="Frame11"]
+offset_left = -600.0
+offset_right = 200.0
+offset_bottom = 100.0
+theme_override_fonts/normal_font = ExtResource("7_yb5up")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "Shadows"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Text" type="Label" parent="Frame11"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1473,14 +1566,82 @@ grow_vertical = 2
 scale = Vector2(0.008, 0.008)
 theme_override_fonts/font = ExtResource("8_pgxwn")
 theme_override_font_sizes/font_size = 4000
-text = "- Bullet 1
-- Bullet 2
-- Bullet 3"
+text = "- Maske (Lightmap)
+- Hard Shadows
+- Soft Shadows
+- Global Illumination"
 
-[node name="Frame11" type="Node2D" parent="."]
-position = Vector2(22000, 0)
+[node name="LightMapImages" type="Node2D" parent="Frame11"]
+position = Vector2(0, -50)
 
-[node name="FrameTitle" type="RichTextLabel" parent="Frame11"]
+[node name="LightMap1" type="TextureRect" parent="Frame11/LightMapImages"]
+offset_left = -200.0
+offset_top = 50.0
+offset_bottom = 250.0
+texture = ExtResource("54_nbrrf")
+
+[node name="Plus" type="TextureRect" parent="Frame11/LightMapImages"]
+modulate = Color(6, 6, 6, 1)
+offset_left = 10.0
+offset_top = 110.0
+offset_right = 90.0
+offset_bottom = 190.0
+rotation = 0.0174533
+texture = ExtResource("55_58w7u")
+expand_mode = 1
+
+[node name="LightMap2" type="TextureRect" parent="Frame11/LightMapImages"]
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 250.0
+texture = ExtResource("56_eihju")
+
+[node name="Equals" type="TextureRect" parent="Frame11/LightMapImages"]
+offset_left = 320.0
+offset_top = 120.0
+offset_right = 380.0
+offset_bottom = 180.0
+rotation = 0.0174533
+texture = ExtResource("57_t7cy4")
+expand_mode = 1
+
+[node name="LightMap3" type="TextureRect" parent="Frame11/LightMapImages"]
+offset_left = 400.0
+offset_top = 50.0
+offset_right = 600.0
+offset_bottom = 250.0
+texture = ExtResource("58_x78xc")
+
+[node name="HardShadows" type="Node2D" parent="Frame11"]
+
+[node name="HardShadows2" type="Sprite2D" parent="Frame11/HardShadows"]
+position = Vector2(-450, 450)
+texture = ExtResource("59_atmhp")
+
+[node name="SoftShadows" type="Node2D" parent="Frame11"]
+
+[node name="SoftShadows2" type="Sprite2D" parent="Frame11/SoftShadows"]
+position = Vector2(-42.9618, 456.875)
+scale = Vector2(0.863467, 0.863467)
+texture = ExtResource("61_gmd6n")
+
+[node name="Umbra" type="Sprite2D" parent="Frame11/SoftShadows"]
+position = Vector2(289.001, 305)
+scale = Vector2(0.393606, 0.393606)
+texture = ExtResource("60_5nm7v")
+
+[node name="GlobalIllumination" type="Node2D" parent="Frame11"]
+
+[node name="GlobalIllum" type="Sprite2D" parent="Frame11/GlobalIllumination"]
+position = Vector2(406.999, 505)
+scale = Vector2(0.644186, 0.644186)
+texture = ExtResource("62_p5ggf")
+
+[node name="Frame12" type="Node2D" parent="."]
+position = Vector2(24000, 0)
+
+[node name="FrameTitle" type="RichTextLabel" parent="Frame12"]
 offset_left = -600.0
 offset_right = 200.0
 offset_bottom = 100.0
@@ -1488,31 +1649,25 @@ theme_override_fonts/normal_font = ExtResource("7_yb5up")
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 40
 bbcode_enabled = true
-text = "Hard Shadows"
+text = "Finale Worte"
 scroll_active = false
 autowrap_mode = 0
 
-[node name="ColorRect" type="ColorRect" parent="Frame11"]
-material = SubResource("ShaderMaterial_3nx5r")
-offset_left = -670.0
-offset_top = -370.0
-offset_right = 710.0
-offset_bottom = 1010.0
-mouse_filter = 2
-script = ExtResource("41_fn4c0")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Frame11"]
-position = Vector2(-205, 395)
-occluder = SubResource("OccluderPolygon2D_cmxgc")
-
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame11"]
-position = Vector2(326, 235)
-occluder = SubResource("OccluderPolygon2D_juhet")
-
-[node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame11"]
-position = Vector2(-115, 216)
-occluder = SubResource("OccluderPolygon2D_8etbf")
-
-[node name="LightOccluder2D4" type="LightOccluder2D" parent="Frame11"]
-position = Vector2(209, 480)
-occluder = SubResource("OccluderPolygon2D_w5n2e")
+[node name="Text" type="Label" parent="Frame12"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 100.0
+offset_right = 101500.0
+offset_bottom = 65136.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.008, 0.008)
+theme_override_fonts/font = ExtResource("8_pgxwn")
+theme_override_font_sizes/font_size = 4000
+text = "- Shader sind vielseitig und mächtig
+- Mathematik ist schwer
+- Shader sind Magie"

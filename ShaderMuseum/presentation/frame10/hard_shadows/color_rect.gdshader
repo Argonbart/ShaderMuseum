@@ -3,6 +3,8 @@ shader_type canvas_item;
 uniform vec2 screen_size;
 uniform vec2 mouse_position;
 
+uniform bool active_mouse = false;
+
 void fragment() {
 
 	vec4 light = vec4(0.5, 0.5, 0.5, 1.0);
@@ -48,6 +50,14 @@ void fragment() {
 	if (distance(light_origin, screen_uv) < 10.0) {
 		flashlight_color = red;
 	}
-	COLOR = flashlight_color;
 
+	if (texture_sdf(screen_uv_to_sdf(SCREEN_UV)) < 0.01) {
+		COLOR = blue;
+	} else {
+		if (active_mouse) {
+			COLOR = flashlight_color;
+		} else {
+			COLOR = light;
+		}
+	}
 }

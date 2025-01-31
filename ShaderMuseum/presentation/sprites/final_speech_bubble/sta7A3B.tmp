@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp2cqsqa2anei"]
+
+[ext_resource type="Script" path="res://presentation/sprites/final_speech_bubble/statement.gd" id="1_mvf8n"]
+[ext_resource type="PackedScene" path="res://presentation/sprites/final_speech_bubble/speech_bubble.tscn" id="2_qgfp8"]
+[ext_resource type="PackedScene" path="res://presentation/sprites/final_speech_bubble/text_animation.tscn" id="3_6t1ck"]
+
+[node name="Statement" type="Node2D" node_paths=PackedStringArray("label")]
+position = Vector2(904, 235)
+script = ExtResource("1_mvf8n")
+label = NodePath("StatementLabel")
+
+[node name="SpeechBubble" parent="." instance=ExtResource("2_qgfp8")]
+position = Vector2(0, 0)
+scale = Vector2(3, 3)
+script = null
+
+[node name="StatementLabel" parent="." instance=ExtResource("3_6t1ck")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -278.0
+offset_top = -46.0
+offset_right = 311.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "Haben Sie noch Fragen?"
+fit_content = true
+scroll_active = false
+script = null

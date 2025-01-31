@@ -18,9 +18,6 @@ func _process(delta):
 		time_passed = 0.0
 	material.set_shader_parameter("time_passed", time_passed)
 	
-	#if Input.is_action_just_pressed("animate"):
-		#animate()
-	
 	if presenter.current_frame == 6 && Input.is_action_just_pressed("click"):
 		material.set_shader_parameter("active_mouse", !material.get_shader_parameter("active_mouse"))
 	
