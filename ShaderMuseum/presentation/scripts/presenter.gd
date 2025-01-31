@@ -82,8 +82,15 @@ var steps_to_frame_dict: Dictionary = {
 	62 : 6,
 	63 : 6,
 	64 : 6,
+	65 : 6,
 
-	65 : 7,
+	66 : 7,
+	67 : 7,
+	68 : 7,
+
+	69 : 8,
+	70 : 9,
+	71 : 10,
 }
 
 var button_to_frame_dict: Dictionary =  {
@@ -93,7 +100,11 @@ var button_to_frame_dict: Dictionary =  {
 	3 : 19,
 	4 : 30,
 	5 : 37,
-	6 : 56
+	6 : 56,
+	7 : 65,
+	8 : 69,
+	9 : 70,
+	10 : 71,
 }
 
 func _ready() -> void:
@@ -444,6 +455,7 @@ func execute_step():
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Legende").visible = false
 			frame[current_frame].get_node("Link").visible = false
+			frame[current_frame].get_node("SDF_List").visible = false
 			frame[current_frame].get_node("Gif").visible = false
 		57:
 			# bullet point
@@ -474,36 +486,52 @@ func execute_step():
 			# animation
 			frame[current_frame].get_node("Legende").visible = true
 			frame[current_frame].get_node("Link").visible = false
+			frame[current_frame].get_node("SDF_List").visible = false
 			frame[current_frame].get_node("Gif").visible = false
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
 		64:
-			# link
-			frame[current_frame].get_node("Link").visible = true
+			# sinus animation
 			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", true)
+			
+		65:
+			# link
+			frame[current_frame].get_node("Effekt0").material.set_shader_parameter("changing_over_time", false)
+			frame[current_frame].get_node("Link").visible = true
+			frame[current_frame].get_node("SDF_List").visible = true
+			frame[current_frame].get_node("Gif").visible = false
 
 		## ---------------------------------- FRAME 7 ----------------------------------------------##
 
-		65:
+		66:
 			# frame 7
 			frame[current_frame].get_node("Text").visible = true
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Effekt0").visible = false
-		46:
+		67:
 			# code exercise
 			frame[current_frame].get_node("Text").visible = false
 			frame[current_frame].get_node("Code").visible = true
 			frame[current_frame].get_node("Effekt0").visible = false
-		47:
+		68:
 			# answer
 			frame[current_frame].get_node("Text").visible = false
 			frame[current_frame].get_node("Code").visible = false
 			frame[current_frame].get_node("Effekt0").visible = true
-		48:
+
+		## ---------------------------------- FRAME 8 ----------------------------------------------##
+
+		69:
 			# frame 8
 			pass
-		49:
+
+		## ---------------------------------- FRAME 9 ----------------------------------------------##
+
+		70:
 			# frame 9
 			pass
-		50:
+
+		## ---------------------------------- FRAME 10 ----------------------------------------------##
+
+		71:
 			# frame 10
 			pass

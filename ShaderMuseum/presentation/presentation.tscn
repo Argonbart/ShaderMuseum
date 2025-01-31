@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=93 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
@@ -48,6 +48,7 @@
 [ext_resource type="Shader" path="res://presentation/frame10/hard_shadows/color_rect.gdshader" id="40_kithv"]
 [ext_resource type="Script" path="res://presentation/frame10/hard_shadows/color_rect.gd" id="41_fn4c0"]
 [ext_resource type="SpriteFrames" uid="uid://cgn0qcfxci775" path="res://presentation/sprites/circle_sdf.gif" id="42_q3wm7"]
+[ext_resource type="Texture2D" uid="uid://716hfylu1fgu" path="res://presentation/sprites/big_sdf_list.png" id="43_l6ndi"]
 
 [sub_resource type="Environment" id="Environment_c8oj4"]
 background_mode = 3
@@ -360,6 +361,7 @@ shader_parameter/factor = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idrkd"]
 shader = ExtResource("36_xqyhy")
+shader_parameter/active_mouse = false
 shader_parameter/light_position = null
 shader_parameter/mouse_position = null
 shader_parameter/screen_size = null
@@ -396,7 +398,7 @@ environment = SubResource("Environment_c8oj4")
 script = ExtResource("1_lm8r0")
 player = NodePath("../Player")
 frame = [NodePath("../Title"), NodePath("../Overview"), NodePath("../Frame2"), NodePath("../Frame3"), NodePath("../Frame4"), NodePath("../Frame5"), NodePath("../Frame6"), NodePath("../Frame7"), NodePath("../Frame8"), NodePath("../Frame9"), NodePath("../Frame10")]
-buttons = [NodePath("../Player/Buttons/HBoxContainer/Button0"), NodePath("../Player/Buttons/HBoxContainer/Button1"), NodePath("../Player/Buttons/HBoxContainer/Button2"), NodePath("../Player/Buttons/HBoxContainer/Button3"), NodePath("../Player/Buttons/HBoxContainer/Button4"), NodePath("../Player/Buttons/HBoxContainer/Button5"), NodePath("../Player/Buttons/HBoxContainer/Button6")]
+buttons = [NodePath("../Player/Buttons/HBoxContainer/Button0"), NodePath("../Player/Buttons/HBoxContainer/Button1"), NodePath("../Player/Buttons/HBoxContainer/Button2"), NodePath("../Player/Buttons/HBoxContainer/Button3"), NodePath("../Player/Buttons/HBoxContainer/Button4"), NodePath("../Player/Buttons/HBoxContainer/Button5"), NodePath("../Player/Buttons/HBoxContainer/Button6"), NodePath("../Player/Buttons/HBoxContainer/Button7"), NodePath("../Player/Buttons/HBoxContainer/Button8"), NodePath("../Player/Buttons/HBoxContainer/Button9"), NodePath("../Player/Buttons/HBoxContainer/Button10")]
 
 [node name="Ground" type="StaticBody2D" parent="."]
 z_index = 1
@@ -479,6 +481,34 @@ layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 10
 text = "6"
+
+[node name="Button7" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "7"
+
+[node name="Button8" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "8"
+
+[node name="Button9" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "9"
+
+[node name="Button10" type="Button" parent="Player/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "10"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 324)
@@ -1166,6 +1196,11 @@ sprite_frames = ExtResource("42_q3wm7")
 animation = &"gif"
 autoplay = "gif"
 
+[node name="SDF_List" type="Sprite2D" parent="Frame6"]
+position = Vector2(350, 320)
+scale = Vector2(0.501023, 0.484836)
+texture = ExtResource("43_l6ndi")
+
 [node name="Frame7" type="Node2D" parent="."]
 position = Vector2(14000, 0)
 
@@ -1204,7 +1239,7 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("9_rnjar")
 theme_override_font_sizes/font_size = 20
 text = "// Calculates signed distance to ???
-float sdSomething(vec2 p, vec2 a, vec2 l) {
+float sdSomething(vec2 p, vec2 a, float l) {
 	vec2 b = vec2(a.x + l, a.y);
 	// case 1
 	if (p.x <= a.x) {
@@ -1247,13 +1282,15 @@ autowrap_mode = 0
 [node name="Frame9" type="Node2D" parent="."]
 position = Vector2(18000, 0)
 
-[node name="Effekt0" type="ColorRect" parent="Frame9" node_paths=PackedStringArray("light")]
+[node name="Effekt0" type="ColorRect" parent="Frame9" node_paths=PackedStringArray("presenter", "light")]
 material = SubResource("ShaderMaterial_idrkd")
 offset_left = -670.0
 offset_top = -370.0
 offset_right = 710.0
 offset_bottom = 1010.0
+mouse_filter = 2
 script = ExtResource("39_fgsva")
+presenter = NodePath("../../Presenter")
 light = NodePath("../Light")
 
 [node name="Light" type="ColorRect" parent="Frame9"]
@@ -1263,14 +1300,17 @@ offset_right = 392.0
 offset_bottom = 390.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Frame9"]
+z_index = 10
 position = Vector2(-206, 485)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="Frame9"]
+z_index = 10
 position = Vector2(-460, 266)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 
 [node name="LightOccluder2D3" type="LightOccluder2D" parent="Frame9"]
+z_index = 10
 position = Vector2(-136, 158)
 occluder = SubResource("OccluderPolygon2D_fwbhe")
 

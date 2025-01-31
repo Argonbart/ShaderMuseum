@@ -3,6 +3,8 @@
 [resource]
 code = "shader_type canvas_item;
 
+uniform bool active_mouse = false;
+
 // set in script
 uniform vec2 light_position;
 uniform vec2 mouse_position;
@@ -18,85 +20,94 @@ void fragment() {
 	// uv
 	vec2 screen_uv = SCREEN_UV * screen_size;
 	
-	// current
-	vec2 current_position = light_position;
-	vec2 end_point = mouse_position;
-	
-	// uv to current
-	vec2 uv_to_current = current_position - screen_uv;
-	vec2 uv_to_current_dir = normalize(uv_to_current);
-	float uv_to_current_distance = length(uv_to_current);
-	
-	// light to mouse
-	vec2 light_to_mouse = mouse_position - light_position;
-	vec2 light_to_mouse_dir = normalize(light_to_mouse);
-	float light_to_mouse_distance = length(light_to_mouse);
-	
-	// light to uv
-	vec2 light_to_uv = screen_uv - light_position;
-	vec2 light_to_uv_dir = normalize(light_to_uv);
-	float light_to_uv_distance = length(light_to_uv);
-	
-	// uv to mouse
-	vec2 uv_to_mouse = mouse_position - screen_uv;
-	vec2 uv_to_mouse_dir = normalize(uv_to_mouse);
-	float uv_to_mouse_distance = length(uv_to_mouse);
-	
-	// output 
-	vec4 output_color = vec4(0.0, 0.0, 0.0, 0.0);
-	vec4 white = vec4(1.0, 1.0, 1.0, 1.0);
-	vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
-	vec4 green = vec4(0.0, 1.0, 0.0, 1.0);
-	vec4 blue = vec4(0.0, 0.0, 1.0, 1.0);
-	bool is_colliding = false;
-	
-	// dye occluder
-	if (texture_sdf(screen_uv_to_sdf(screen_uv / screen_size)) < 0.01) {
-		output_color = blue;
-		end_point = current_position;
-	} else {
-		// algorithm
-		float accum = 0.0;
-		for (int i = 0; i < number_of_repetitions; i++) {
-			uv_to_current_distance = length(current_position - screen_uv);
-			float d = 1.5 * texture_sdf(screen_uv_to_sdf(current_position / screen_size));
-			if (d < 10.0) {
-				is_colliding = true;
-				if (uv_to_current_distance > -20.0 && uv_to_current_distance < 20.0) {
-					output_color = red;
-					end_point = current_position;
-				}
-			} else if (uv_to_current_distance > d - circle_line_thickness && uv_to_current_distance < d + circle_line_thickness) {
-				output_color = white;
-			} else if (uv_to_current_distance > -5.0 && uv_to_current_distance < 5.0) {
-				output_color = white;
-			}
-			accum += d;
-			if (is_colliding || accum > light_to_mouse_distance) {
-				break;
-			}
-			current_position += d * light_to_mouse_dir;
-		}
+	if (active_mouse) {
 		
-		if (is_colliding) {
+		// current
+		vec2 current_position = light_position;
+		vec2 end_point = mouse_position;
+		
+		// uv to current
+		vec2 uv_to_current = current_position - screen_uv;
+		vec2 uv_to_current_dir = normalize(uv_to_current);
+		float uv_to_current_distance = length(uv_to_current);
+		
+		// light to mouse
+		vec2 light_to_mouse = mouse_position - light_position;
+		vec2 light_to_mouse_dir = normalize(light_to_mouse);
+		float light_to_mouse_distance = length(light_to_mouse);
+		
+		// light to uv
+		vec2 light_to_uv = screen_uv - light_position;
+		vec2 light_to_uv_dir = normalize(light_to_uv);
+		float light_to_uv_distance = length(light_to_uv);
+		
+		// uv to mouse
+		vec2 uv_to_mouse = mouse_position - screen_uv;
+		vec2 uv_to_mouse_dir = normalize(uv_to_mouse);
+		float uv_to_mouse_distance = length(uv_to_mouse);
+		
+		// output 
+		vec4 output_color = vec4(0.0, 0.0, 0.0, 0.0);
+		vec4 white = vec4(1.0, 1.0, 1.0, 1.0);
+		vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
+		vec4 green = vec4(0.0, 1.0, 0.0, 1.0);
+		vec4 blue = vec4(0.0, 0.0, 1.0, 1.0);
+		bool is_colliding = false;
+		
+		// dye occluder
+		if (texture_sdf(screen_uv_to_sdf(screen_uv / screen_size)) < 0.01) {
+			output_color = blue;
 			end_point = current_position;
-		}
-		
-		vec2 light_to_end = end_point - light_position;
-		float t = clamp(dot(light_to_uv, light_to_end) / dot(light_to_end, light_to_end), 0.0, 1.0);
-		vec2 closest_point = light_position + t * light_to_end;
-		float distance_to_line = length(screen_uv - closest_point);
-		if (distance_to_line > line_thickness - circle_line_thickness && distance_to_line < line_thickness + circle_line_thickness) {
+		} else {
+			// algorithm
+			float accum = 0.0;
+			for (int i = 0; i < number_of_repetitions; i++) {
+				uv_to_current_distance = length(current_position - screen_uv);
+				float d = 1.5 * texture_sdf(screen_uv_to_sdf(current_position / screen_size));
+				if (d < 10.0) {
+					is_colliding = true;
+					if (uv_to_current_distance > -20.0 && uv_to_current_distance < 20.0) {
+						output_color = red;
+						end_point = current_position;
+					}
+				} else if (uv_to_current_distance > d - circle_line_thickness && uv_to_current_distance < d + circle_line_thickness) {
+					output_color = white;
+				} else if (uv_to_current_distance > -5.0 && uv_to_current_distance < 5.0) {
+					output_color = white;
+				}
+				accum += d;
+				if (is_colliding || accum > light_to_mouse_distance) {
+					break;
+				}
+				current_position += d * light_to_mouse_dir;
+			}
+			
 			if (is_colliding) {
-				output_color = red;
-			} else {
+				end_point = current_position;
+			}
+			
+			vec2 light_to_end = end_point - light_position;
+			float t = clamp(dot(light_to_uv, light_to_end) / dot(light_to_end, light_to_end), 0.0, 1.0);
+			vec2 closest_point = light_position + t * light_to_end;
+			float distance_to_line = length(screen_uv - closest_point);
+			if (distance_to_line > line_thickness - circle_line_thickness && distance_to_line < line_thickness + circle_line_thickness) {
+				if (is_colliding) {
+					output_color = red;
+				} else {
+					output_color = green;
+				}
+			}
+			if (!is_colliding && uv_to_mouse_distance > -20.0 && uv_to_mouse_distance < 20.0) {
 				output_color = green;
 			}
 		}
-		if (!is_colliding && uv_to_mouse_distance > -20.0 && uv_to_mouse_distance < 20.0) {
-			output_color = green;
+		
+		COLOR = output_color;
+	} else {
+		if (texture_sdf(screen_uv_to_sdf(screen_uv / screen_size)) < 0.01) {
+			COLOR = vec4(0.0, 0.0, 1.0, 1.0);
+		} else {
+			COLOR = vec4(0.0);
 		}
 	}
-	
-	COLOR = output_color;
 }"
