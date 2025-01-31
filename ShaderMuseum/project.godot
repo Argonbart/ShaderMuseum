@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="ShaderMuseum"
+config/name="ShaderMagic"
 run/main_scene="res://presentation/presentation.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0.252028, 0.252028, 0.252028, 1)
-config/icon="res://presentation/sprites/icon.svg"
+config/icon="res://presentation/sprites/gifs/gif3/frame_09_delay-0.2s.png"
 
 [display]
 
@@ -47,6 +47,11 @@ right_frame={
 click={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(46, 9),"global_position":Vector2(53, 45),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+toggle_fullscreen={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194342,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

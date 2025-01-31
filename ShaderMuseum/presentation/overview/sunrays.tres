@@ -1,4 +1,7 @@
-/*
+[gd_resource type="Shader" format=3 uid="uid://das8t44kmr3ac"]
+
+[resource]
+code = "/*
 Shader from Godot Shaders - the free shader library.
 godotshaders.com/shader/god-rays
 
@@ -100,10 +103,10 @@ void fragment()
 	// Color to the rays
 	vec3 shine = vec3(rays) * color.rgb;
 
-	// Try different blending modes for a nicer effect. "Screen" is included in the code,
+	// Try different blending modes for a nicer effect. \"Screen\" is included in the code,
 	// but take a look at https://godotshaders.com/snippet/blending-modes/ for more.
-	// With "Screen" blend mode:
+	// With \"Screen\" blend mode:
 	shine = screen(texture(SCREEN_TEXTURE, SCREEN_UV), vec4(color)).rgb;
 
 	COLOR = vec4(shine, rays * color.a);
-}
+}"

@@ -11,6 +11,8 @@ var is_moving = false
 var is_moving_left = false
 var is_moving_right = false
 
+var is_fullscreen = false
+
 func _process(delta):
 	
 	# adjust movement
@@ -44,6 +46,16 @@ func _process(delta):
 			else:
 				is_moving_right = true
 			presenter.next()
+	
+	if Input.is_action_just_pressed("toggle_fullscreen"):
+		toggle_fullscreen()
+
+func toggle_fullscreen():
+	is_fullscreen = !is_fullscreen
+	if is_fullscreen == true:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	if is_fullscreen == false:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 func move_frame_to_the_left():
 	target_position_x = position.x - 2000.0

@@ -16,19 +16,19 @@ void fragment()
 {
 	vec4 red = vec4(1.0, 0.2, 0.2, 1.0);
 	vec4 green = vec4(0.2, 1.0, 0.2, 1.0);
-	
+
 	// default transparent
 	vec4 color_output = vec4(0.0);
-	
+
 	// all green
 	if (green_active && COLOR.a > 0.0) {
 		color_output = green;
-	} 
-	
+	}
+
 	// red half
 	if (half_red_active && UV.x + UV.y > 1.0 && COLOR.a > 0.0) {
 		color_output = red;
-	} 
-	
+	}
+
 	COLOR = color_output;
 }"

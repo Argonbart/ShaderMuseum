@@ -1,4 +1,4 @@
-[gd_scene load_steps=167 format=3 uid="uid://bedj5i0t6tevn"]
+[gd_scene load_steps=169 format=3 uid="uid://bedj5i0t6tevn"]
 
 [ext_resource type="Script" path="res://presentation/scripts/player.gd" id="1_jx5g5"]
 [ext_resource type="Script" path="res://presentation/scripts/presenter.gd" id="1_lm8r0"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://dlpyf1awwppwg" path="res://presentation/title/label1_material.tres" id="4_h3db0"]
 [ext_resource type="Texture2D" uid="uid://bjpwdbghnotw6" path="res://presentation/sprites/final_speech_bubble/default.png" id="4_m0d7q"]
 [ext_resource type="Script" path="res://presentation/overview/questions.gd" id="4_rqdq0"]
+[ext_resource type="Shader" uid="uid://das8t44kmr3ac" path="res://presentation/overview/sunrays.tres" id="5_3v1gn"]
 [ext_resource type="Texture2D" uid="uid://dsulqpbnp7mop" path="res://presentation/sprites/seamless-wavy-line-pattern-png.webp" id="5_4f437"]
 [ext_resource type="Shader" path="res://presentation/frame2/frame2_shader.gdshader" id="6_jupxd"]
 [ext_resource type="FontFile" uid="uid://b1ytffl6n528u" path="res://fonts/Besty Beige.ttf" id="7_yb5up"]
@@ -134,6 +135,22 @@ size = Vector2(2000, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_188vg"]
 size = Vector2(64, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4ttu"]
+shader = ExtResource("5_3v1gn")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 0.439
+shader_parameter/cutoff = 0.252
+shader_parameter/falloff = 0.2
+shader_parameter/edge_fade = 0.15
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Vector4(1, 0.9, 0.65, 0.8)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xe21q"]
 
@@ -800,6 +817,13 @@ visible = false
 script = ExtResource("4_rqdq0")
 presenter = NodePath("../../Presenter")
 
+[node name="Sunlight" type="ColorRect" parent="Player/Questions"]
+material = SubResource("ShaderMaterial_t4ttu")
+offset_left = -800.0
+offset_top = -663.0
+offset_right = 231.0
+offset_bottom = 36.0
+
 [node name="Bubble" type="Sprite2D" parent="Player/Questions"]
 material = SubResource("ShaderMaterial_xe21q")
 position = Vector2(149, -218)
@@ -1413,7 +1437,6 @@ texture = ExtResource("2_rtug0")
 
 [node name="Gif2" type="AnimatedSprite2D" parent="Frame5/Gifs"]
 position = Vector2(439, 230)
-scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_h3m1d")
 autoplay = "default"
 
