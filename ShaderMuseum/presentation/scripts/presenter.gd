@@ -111,6 +111,7 @@ var steps_to_frame_dict: Dictionary = {
 	85 : 12,
 	86 : 12,
 	87 : 12,
+	88 : 12,
 }
 
 var button_to_frame_dict: Dictionary =  {
@@ -641,6 +642,7 @@ func execute_step():
 		84:
 			# frame 12
 			frame[current_frame].get_node("Text").text = ""
+			frame[current_frame].get_node("Quellen").visible = false
 		85:
 			# frame 12
 			frame[current_frame].get_node("Text").text = "- Shader sind vielseitig und mächtig"
@@ -650,5 +652,9 @@ func execute_step():
 		87:
 			# frame 12
 			frame[current_frame].get_node("Text").text = "- Shader sind vielseitig und mächtig\n- Mathematik ist schwer\n- Shader sind Magie"
+			frame[current_frame].get_node("Quellen").visible = false
+		88:
+			# sources
+			frame[current_frame].get_node("Quellen").visible = true
 
 		## ---------------------------------- LOOPING ----------------------------------------------##

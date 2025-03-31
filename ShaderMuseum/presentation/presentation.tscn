@@ -1949,3 +1949,40 @@ theme_override_font_sizes/font_size = 4000
 text = "- Shader sind vielseitig und mächtig
 - Mathematik ist schwer
 - Shader sind Magie"
+
+[node name="Quellen" type="Node2D" parent="Frame12"]
+
+[node name="FrameTitle2" type="RichTextLabel" parent="Frame12/Quellen"]
+offset_left = -600.0
+offset_top = 250.0
+offset_right = 200.0
+offset_bottom = 350.0
+theme_override_fonts/normal_font = ExtResource("7_yb5up")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "Quellen"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Text2" type="Label" parent="Frame12/Quellen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 350.0
+offset_right = 189497.0
+offset_bottom = 35975.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.008, 0.008)
+theme_override_fonts/font = ExtResource("8_pgxwn")
+theme_override_font_sizes/font_size = 3000
+text = "- https://www.theseus.fi/bitstream/handle/10024/817035/Lehtio_Iiro.pdf [ Iiro Lehtiö ]
+- https://slembcke.github.io/SuperFastSoftShadows [ Slembcke ]
+- https://slembcke.github.io/SuperFastHardShadows [ Slembcke ]
+- https://samuelbigos.github.io/posts/2dgi1-2d-global-illumination-in-godot.html [ Samuel Bigos ]
+- https://www.youtube.com/watch?v=LyQWZRfWotQ [ CGMatter ]
+- https://www.youtube.com/watch?v=Cp5WWtMoeKg [ Sebastian Lague ]"
